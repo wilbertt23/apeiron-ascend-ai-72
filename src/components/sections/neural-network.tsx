@@ -8,39 +8,30 @@ const NeuralNetwork = () => {
   const [inputs, setInputs] = useState([0, 0, 0, 0, 0]);
   const [output, setOutput] = useState(0);
   const [decision, setDecision] = useState("No Decision");
-  const [hiddenLayer1, setHiddenLayer1] = useState([0, 0, 0, 0]);
-  const [hiddenLayer2, setHiddenLayer2] = useState([0, 0, 0, 0]);
+  const [hiddenLayer, setHiddenLayer] = useState([0, 0, 0, 0, 0, 0]);
 
   // Simple activation function (sigmoid)
   const sigmoid = (x: number) => 1 / (1 + Math.exp(-x));
 
   // Dynamic weight matrices with randomness for different outputs each time
   const generateRandomWeights = () => ({
-    weights1: Array(4).fill(0).map(() => Array(5).fill(0).map(() => (Math.random() - 0.5) * 2)),
-    weights2: Array(4).fill(0).map(() => Array(4).fill(0).map(() => (Math.random() - 0.5) * 2)),
-    weights3: Array(4).fill(0).map(() => (Math.random() - 0.5) * 2)
+    weights1: Array(6).fill(0).map(() => Array(5).fill(0).map(() => (Math.random() - 0.5) * 2)),
+    weights2: Array(6).fill(0).map(() => (Math.random() - 0.5) * 2)
   });
 
   const calculateNetwork = () => {
     // Generate new random weights each time for different outputs
-    const { weights1, weights2, weights3 } = generateRandomWeights();
+    const { weights1, weights2 } = generateRandomWeights();
     
-    // Calculate hidden layer 1
-    const hidden1 = weights1.map((nodeWeights, i) => {
+    // Calculate hidden layer
+    const hidden = weights1.map((nodeWeights, i) => {
       const sum = inputs.reduce((acc, input, j) => acc + input * nodeWeights[j], 0);
       return sigmoid(sum);
     });
-    setHiddenLayer1(hidden1);
-
-    // Calculate hidden layer 2
-    const hidden2 = weights2.map((nodeWeights, i) => {
-      const sum = hidden1.reduce((acc, hidden, j) => acc + hidden * nodeWeights[j], 0);
-      return sigmoid(sum);
-    });
-    setHiddenLayer2(hidden2);
+    setHiddenLayer(hidden);
 
     // Calculate output layer and determine decision directly
-    const outputSum = hidden2.reduce((acc, hidden, j) => acc + hidden * weights3[j], 0);
+    const outputSum = hidden.reduce((acc, hidden, j) => acc + hidden * weights2[j], 0);
     const outputValue = sigmoid(outputSum);
     
     // Convert output to decision with random element
@@ -67,35 +58,39 @@ const NeuralNetwork = () => {
     setInputs(newInputs);
   };
 
-  const NetworkNode = ({ value, label, isActive }: { value: number; label: string; isActive: boolean }) => (
-    <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 transition-all duration-300 mb-4 ${
-      isActive ? 'bg-cyber-blue/20 border-cyber-blue shadow-glow-cyan' : 'bg-surface border-border'
-    }`}>
-      <div className="text-xs font-mono text-center">
-        <div className="text-[10px] text-muted-foreground">{label}</div>
-        <div className="font-semibold">{value.toFixed(2)}</div>
+  const NetworkNode = ({ value, label, color = "blue" }: { value: number; label: string; color?: "blue" | "green" | "yellow" }) => {
+    const colorClasses = {
+      blue: "bg-blue-500 border-blue-600 text-white",
+      green: "bg-green-500 border-green-600 text-white", 
+      yellow: "bg-yellow-500 border-yellow-600 text-black"
+    };
+    
+    return (
+      <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 ${colorClasses[color]} shadow-lg mb-4`}>
+        <div className="text-xs font-mono text-center">
+          <div className="text-[9px] opacity-80">{label}</div>
+          <div className="font-semibold text-[10px]">{value.toFixed(2)}</div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
-  const ConnectionLine = ({ fromCount, toCount, offset = 0 }: { fromCount: number; toCount: number; offset?: number }) => (
-    <div className="relative mx-4">
-      <svg width="80" height="240" className="absolute top-0 left-0">
+  const ConnectionLines = ({ fromCount, toCount }: { fromCount: number; toCount: number }) => (
+    <div className="relative mx-8">
+      <svg width="100" height="320" className="absolute top-0 left-0">
         {Array.from({ length: fromCount }, (_, fromIndex) => 
           Array.from({ length: toCount }, (_, toIndex) => {
-            // Calculate center positions of nodes (32px = half of 64px node size)
-            const fromY = 32 + (fromIndex * 68) + offset; // 68px spacing between nodes
-            const toY = 32 + (toIndex * 68) + offset;
+            const fromY = 40 + (fromIndex * 68);
+            const toY = 40 + (toIndex * 52);
             return (
               <line
                 key={`${fromIndex}-${toIndex}`}
-                x1="32" // Start from center of from-node
+                x1="0"
                 y1={fromY}
-                x2="48" // End at center of to-node
+                x2="100"
                 y2={toY}
-                stroke="hsl(var(--cyber-blue))"
-                strokeWidth="1.5"
-                strokeOpacity="0.6"
+                stroke="#374151"
+                strokeWidth="2"
                 className="transition-all duration-300"
               />
             );
@@ -145,12 +140,12 @@ const NeuralNetwork = () => {
 
       {/* Neural Network Visualization */}
       <Card className="p-8 bg-surface border border-border">
-        <h3 className="text-xl font-semibold text-cyber-pink mb-6 text-center">AI Decision Network</h3>
+        <h3 className="text-xl font-semibold text-cyber-pink mb-6 text-center">Artificial Neural Networks</h3>
         
-        <div className="flex items-center justify-center space-x-8 overflow-x-auto min-w-max">
+        <div className="flex items-center justify-center space-x-12 overflow-x-auto min-w-max">
           {/* Input Layer */}
           <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-cyber-blue mb-4">Game State</h4>
+            <h4 className="text-sm font-medium text-foreground mb-6">Input layer</h4>
             <div className="space-y-1">
               {inputs.map((input, index) => {
                 const labels = ["X", "Y", "HP", "EHP", "MP"];
@@ -159,61 +154,41 @@ const NeuralNetwork = () => {
                     key={index}
                     value={input}
                     label={labels[index]}
-                    isActive={input !== 0}
+                    color="blue"
                   />
                 );
               })}
             </div>
           </div>
 
-          <ConnectionLine fromCount={5} toCount={4} />
+          <ConnectionLines fromCount={5} toCount={6} />
 
-          {/* Hidden Layer 1 */}
+          {/* Hidden Layer */}
           <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-cyber-blue mb-4">Hidden Layer 1</h4>
-            <div className="space-y-1">
-              {hiddenLayer1.map((hidden, index) => (
+            <h4 className="text-sm font-medium text-foreground mb-6">Hidden layer</h4>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+              {hiddenLayer.map((hidden, index) => (
                 <NetworkNode
                   key={index}
                   value={hidden}
-                  label={`H1${index + 1}`}
-                  isActive={hidden > 0.5}
+                  label={`H${index + 1}`}
+                  color="green"
                 />
               ))}
             </div>
           </div>
 
-          <ConnectionLine fromCount={4} toCount={4} />
-
-          {/* Hidden Layer 2 */}
-          <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-cyber-blue mb-4">Hidden Layer 2</h4>
-            <div className="space-y-1">
-              {hiddenLayer2.map((hidden, index) => (
-                <NetworkNode
-                  key={index}
-                  value={hidden}
-                  label={`H2${index + 1}`}
-                  isActive={hidden > 0.5}
-                />
-              ))}
-            </div>
-          </div>
-
-          <ConnectionLine fromCount={4} toCount={1} />
+          <ConnectionLines fromCount={6} toCount={1} />
 
           {/* Output Layer */}
           <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-cyber-blue mb-4">AI Decision</h4>
-            <div className="flex flex-col items-center space-y-2">
-              <div className={`flex flex-col items-center justify-center w-20 h-20 rounded-full border-2 transition-all duration-300 ${
-                output > 0.5 ? 'bg-cyber-blue/20 border-cyber-blue' : 'bg-surface border-border'
-              }`}>
-                <div className="text-xs font-mono text-center">
-                  <div className="text-[10px] text-muted-foreground">Output</div>
-                  <div className="font-semibold">{output.toFixed(2)}</div>
-                </div>
-              </div>
+            <h4 className="text-sm font-medium text-foreground mb-6">Output layer</h4>
+            <div className="flex flex-col items-center space-y-4">
+              <NetworkNode
+                value={output}
+                label="Output"
+                color="yellow"
+              />
               <div className={`px-4 py-2 rounded-lg border text-center font-semibold ${
                 decision === "Attack" ? "bg-red-500/20 border-red-500 text-red-400" :
                 decision === "Retreat" ? "bg-yellow-500/20 border-yellow-500 text-yellow-400" :
