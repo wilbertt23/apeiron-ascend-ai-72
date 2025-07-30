@@ -12,7 +12,7 @@ interface Tab {
 const tabs: Tab[] = [
   { id: "reinforcement", label: "Reinforcement Learning", icon: Brain },
   { id: "video", label: "Video Analysis", icon: Video },
-  { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon },
+  { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon }, 
   { id: "color", label: "Color Scheme Prediction", icon: Palette },
   { id: "product", label: "Productization", icon: Building2 },
   { id: "neural", label: "Neural Network", icon: Network },
