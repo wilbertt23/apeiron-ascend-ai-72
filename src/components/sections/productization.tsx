@@ -44,20 +44,20 @@ const Productization = () => {
     },
     {
       icon: Factory,
-      title: "Industrial Automation",
+      title: "AI Enabled Health Services",
       description: "Smart factory systems with reinforcement learning for optimized production workflows",
       features: [
-        "Production line optimization",
-        "Resource allocation",
-        "Predictive quality control",
-        "Energy consumption optimization",
-        "Supply chain coordination"
+        "Advanced patient data analysis",
+        "Real-time health monitoring",
+        "Adaptive treatment recommendations",
+        "Early disease detection algorithms",
+        "Integrated health coordination"
       ],
       benefits: [
-        "40% productivity increase",
-        "60% reduced waste",
-        "Real-time adaptability",
-        "Cost optimization"
+        "reduced healthcare costs",
+        "enhanced preventive care",
+        "improved patient outcomes",
+        "better efficiency of healthcare delivery"
       ],
       color: "cyber-purple"
     }
