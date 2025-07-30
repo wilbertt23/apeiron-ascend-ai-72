@@ -1,175 +1,75 @@
 import axios from 'axios';
 
-const invokeUrl = "https://ai.api.nvidia.com/v1/vlm/nvidia/vila";
-const stream = false;
-const query = 'Describe the scene';
+// Backend server URL (make sure your backend is running on this port)
+const BACKEND_API_URL = 'http://localhost:3001';
 
-const kNvcfAssetUrl = 'https://api.nvcf.nvidia.com/v2/nvcf/assets';
-// const kNvcfAssetUrl = '/nvcf';
-
-// Retrieve the API Key from environment variables
-const kApiKey = import.meta.env.VITE_NVIDIA_VILA_API_KEY;
-if (!kApiKey) {
-  console.error("Generate API_KEY and export VITE_NVIDIA_VILA_API_KEY=xxxx");
-  throw new Error("API Key not found");
-}
-
-const kSupportedList = {
-  "png": ["image/png", "img"],
-  "jpg": ["image/jpg", "img"],
-  "jpeg": ["image/jpeg", "img"],
-  "mp4": ["video/mp4", "video"]
-};
-
-// Get file extension (browser-compatible)
-function getExtension(filename: string): string {
-  const lastDotIndex = filename.lastIndexOf('.');
-  if (lastDotIndex === -1) return '';
-  return filename.slice(lastDotIndex + 1).toLowerCase();
-}
-
-// Get MIME type
-function mimeType(ext: string): string {
-  return kSupportedList[ext]?.[0] || '';
-}
-
-// Get media type
-function mediaType(ext: string): string {
-  return kSupportedList[ext]?.[1] || '';
-}
-
-// Upload asset (browser-compatible)
-async function uploadAsset(mediaFile: File, description: string): Promise<string> {
-  const ext = getExtension(mediaFile.name);
-  if (!(ext in kSupportedList)) {
-    throw new Error(`Unsupported file extension: ${ext}`);
-  }
-
-  // Convert File to ArrayBuffer for browser compatibility
-  const dataInput = await mediaFile.arrayBuffer();
-
-  const headers = {
-    "Authorization": `Bearer ${kApiKey}`,
-    "Content-Type": "application/json",
-    "Accept": "application/json"
-  };
-
-  const postData = {
-    contentType: mimeType(ext),
-    description: description
-  };
-
-  // First API call to authorize asset upload
-  const { data: authorizeRes } = await axios.post(kNvcfAssetUrl, postData, { headers });
-  console.log(`uploadUrl: ${authorizeRes.uploadUrl}`);
-
-  // Second API call to upload the file
-  const response = await axios.put(authorizeRes.uploadUrl, dataInput, {
-    headers: {
-      "x-amz-meta-nvcf-asset-description": description,
-      "content-type": mimeType(ext)
-    }
-  });
-
-  if (response.status === 200) {
-    console.log(`upload asset_id ${authorizeRes.assetId} successfully!`);
-    return authorizeRes.assetId.toString();
-  } else {
-    console.log(`upload asset_id ${authorizeRes.assetId} failed.`);
-    throw new Error(`Asset upload failed: ${authorizeRes.assetId}`);
-  }
-}
-
-// Delete asset
-async function deleteAsset(assetId: string): Promise<void> {
-  const headers = {
-    "Authorization": `Bearer ${kApiKey}`
-  };
-  const url = `${kNvcfAssetUrl}/${assetId}`;
-  await axios.delete(url, { headers });
-}
-
-// Chat with media NVCF (updated for browser compatibility)
-async function chatWithMediaNvcf(inferUrl: string, mediaFiles: File[], query: string, stream = false): Promise<unknown> {
-  const assetList: string[] = [];
-  const extList: string[] = [];
-  let mediaContent = "";
-  let hasVideo = false;
-
-  for (const mediaFile of mediaFiles) {
-    const ext = getExtension(mediaFile.name);
-    if (!(ext in kSupportedList)) {
-      throw new Error(`${mediaFile.name} format is not supported`);
-    }
-
-    if (mediaType(ext) === "video") {
-      hasVideo = true;
-    }
-
-    console.log(`uploading file: ${mediaFile.name}`);
-    const assetId = await uploadAsset(mediaFile, "Reference media file");
-    console.log(`assetId: ${assetId}`);
-    assetList.push(assetId);
-    extList.push(ext);
-    mediaContent += `<${mediaType(ext)} src="data:${mimeType(ext)};asset_id,${assetId}" />`;
-  }
-
-  if (hasVideo && mediaFiles.length !== 1) {
-    throw new Error("Only a single video is supported.");
-  }
-
-  const assetSeq = assetList.join(',');
-  console.log(`received asset_id list: ${assetSeq}`);
-
-  const headers = {
-    "Authorization": `Bearer ${kApiKey}`,
-    "Content-Type": "application/json",
-    "NVCF-INPUT-ASSET-REFERENCES": assetSeq,
-    "NVCF-FUNCTION-ASSET-IDS": assetSeq,
-    "Accept": "application/json"
-  };
-
-  if (stream) {
-    headers["Accept"] = "text/event-stream";
-  }
-
-  const messages = [{
-    "role": "user",
-    "content": `${query} ${mediaContent}`
-  }];
-
-  const payload = {
-    max_tokens: 1024,
-    temperature: 0.2,
-    top_p: 0.7,
-    seed: 50,
-    num_frames_per_inference: 8,
-    messages: messages,
-    stream: stream,
-    model: "nvidia/vila"
-  };
-
-  // Post to the inference API
-  const response = await axios.post(inferUrl, payload, {
-    headers: headers,
-    responseType: stream ? 'stream' : 'json'
-  });
-
-  if (stream) {
-    response.data.on('data', (line: Buffer | string) => {
-      console.log(line.toString());
+/**
+ * Simple function to analyze media using the backend server
+ * This avoids all CORS issues by handling uploads server-side
+ * 
+ * @param mediaFiles - Array of File objects to analyze
+ * @param query - Text query/question about the media (default: 'Describe the scene')
+ * @returns Promise with the analysis result from NVIDIA Vila API
+ */
+export async function analyzeMedia(mediaFiles: File[], query: string = 'Describe the scene'): Promise<any> {
+  try {
+    // Create FormData to send files to backend
+    const formData = new FormData();
+    
+    // Add all files to the form data 
+    mediaFiles.forEach((file) => {
+      formData.append('files', file);
     });
-  } else {
-    console.log(JSON.stringify(response.data));
+    
+    // Add the query text
+    formData.append('query', query);
+    
+    console.log(`Sending ${mediaFiles.length} file(s) to backend for analysis...`);
+    
+    // Send request to backend server
+    const response = await axios.post(`${BACKEND_API_URL}/api/analyze-media`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      timeout: 60000, // 60 second timeout for file uploads
+    });
+    
+    console.log('Analysis completed successfully');
+    const content = response.data.choices[0].message.content;
+    console.log(content);
+    return content;
+    
+  } catch (error) {
+    console.error('Error analyzing media:', error);
+    
+    if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNREFUSED') {
+        throw new Error('Backend server is not running. Please start the server with: node server.js');
+      }
+      if (error.response) {
+        throw new Error(error.response.data?.message || `Server error: ${error.response.status}`);
+      }
+      if (error.request) {
+        throw new Error('No response from server. Check if the backend is running.');
+      }
+    }
+    
+    throw error;
   }
-
-  // Clean up uploaded assets
-  console.log(`deleting assets: ${assetList}`);
-  for (const assetId of assetList) {
-    await deleteAsset(assetId);
-  }
-
-  return response.data;
 }
 
-export default chatWithMediaNvcf;
+// Legacy export for backward compatibility
+export default analyzeMedia;
+
+/**
+ * Health check function to verify backend server is running
+ */
+export async function checkServerHealth(): Promise<boolean> {
+  try {
+    const response = await axios.get(`${BACKEND_API_URL}/health`, { timeout: 5000 });
+    return response.data.status === 'OK';
+  } catch (error) {
+    console.error('Server health check failed:', error);
+    return false;
+  }
+}

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Upload, Play, CheckCircle, Target, Zap, Clock, TrendingUp, History, X, FileVideo } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart, Radar } from "recharts";
-import chatWithMediaNvcf from "@/controllers/vila-api";
+import analyzeMedia from "@/controllers/vila-api";
 
 const VideoAnalysis = () => {
   const [dragActive, setDragActive] = useState(false);
@@ -102,7 +102,7 @@ const VideoAnalysis = () => {
     setShowPreview(false);
     setAnalyzing(true);
     // Simulate analysis process
-    await chatWithMediaNvcf(invokeUrl, [selectedFile], query, stream);
+    await analyzeMedia([selectedFile], query);
     setAnalysisComplete(true);
     setAnalyzing(false);
   };
