@@ -75,23 +75,23 @@ const NeuralNetwork = () => {
     );
   };
 
-  const ConnectionLines = ({ fromCount, toCount }: { fromCount: number; toCount: number }) => (
-    <div className="relative mx-8">
-      <svg width="100" height="320" className="absolute top-0 left-0">
+  const ConnectionLines = ({ fromCount, toCount, fromSpacing = 68, toSpacing = 68 }: { fromCount: number; toCount: number; fromSpacing?: number; toSpacing?: number }) => (
+    <div className="flex items-center justify-center mx-4">
+      <svg width="80" height="340" className="overflow-visible">
         {Array.from({ length: fromCount }, (_, fromIndex) => 
           Array.from({ length: toCount }, (_, toIndex) => {
-            const fromY = 40 + (fromIndex * 68);
-            const toY = 40 + (toIndex * 52);
+            const fromY = 32 + (fromIndex * fromSpacing);
+            const toY = 32 + (toIndex * toSpacing);
             return (
               <line
                 key={`${fromIndex}-${toIndex}`}
                 x1="0"
                 y1={fromY}
-                x2="100"
+                x2="80"
                 y2={toY}
                 stroke="#374151"
-                strokeWidth="2"
-                className="transition-all duration-300"
+                strokeWidth="1.5"
+                opacity="0.6"
               />
             );
           })
