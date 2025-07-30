@@ -75,28 +75,9 @@ const NeuralNetwork = () => {
     );
   };
 
-  const ConnectionLines = ({ fromCount, toCount, fromSpacing = 68, toSpacing = 68 }: { fromCount: number; toCount: number; fromSpacing?: number; toSpacing?: number }) => (
-    <div className="flex items-center justify-center mx-4">
-      <svg width="80" height="340" className="overflow-visible">
-        {Array.from({ length: fromCount }, (_, fromIndex) => 
-          Array.from({ length: toCount }, (_, toIndex) => {
-            const fromY = 32 + (fromIndex * fromSpacing);
-            const toY = 32 + (toIndex * toSpacing);
-            return (
-              <line
-                key={`${fromIndex}-${toIndex}`}
-                x1="0"
-                y1={fromY}
-                x2="80"
-                y2={toY}
-                stroke="#374151"
-                strokeWidth="1.5"
-                opacity="0.6"
-              />
-            );
-          })
-        )}
-      </svg>
+  const SingleLine = () => (
+    <div className="flex items-center justify-center mx-6">
+      <div className="w-16 h-0.5 bg-gray-400"></div>
     </div>
   );
 
@@ -142,7 +123,7 @@ const NeuralNetwork = () => {
       <Card className="p-8 bg-surface border border-border">
         <h3 className="text-xl font-semibold text-cyber-pink mb-6 text-center">Artificial Neural Networks</h3>
         
-        <div className="flex items-center justify-center space-x-12 overflow-x-auto min-w-max">
+        <div className="flex items-center justify-center space-x-4 overflow-x-auto min-w-max">
           {/* Input Layer */}
           <div className="flex flex-col items-center">
             <h4 className="text-sm font-medium text-foreground mb-6">Input layer</h4>
@@ -161,13 +142,13 @@ const NeuralNetwork = () => {
             </div>
           </div>
 
-          <ConnectionLines fromCount={5} toCount={6} />
+          <SingleLine />
 
-          {/* Hidden Layer */}
+          {/* First Hidden Layer */}
           <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-foreground mb-6">Hidden layer</h4>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-1">
-              {hiddenLayer.map((hidden, index) => (
+            <h4 className="text-sm font-medium text-foreground mb-6">Hidden layer 1</h4>
+            <div className="space-y-1">
+              {hiddenLayer.slice(0, 3).map((hidden, index) => (
                 <NetworkNode
                   key={index}
                   value={hidden}
@@ -178,7 +159,24 @@ const NeuralNetwork = () => {
             </div>
           </div>
 
-          <ConnectionLines fromCount={6} toCount={1} />
+          <SingleLine />
+
+          {/* Second Hidden Layer */}
+          <div className="flex flex-col items-center">
+            <h4 className="text-sm font-medium text-foreground mb-6">Hidden layer 2</h4>
+            <div className="space-y-1">
+              {hiddenLayer.slice(3, 6).map((hidden, index) => (
+                <NetworkNode
+                  key={index}
+                  value={hidden}
+                  label={`H${index + 4}`}
+                  color="green"
+                />
+              ))}
+            </div>
+          </div>
+
+          <SingleLine />
 
           {/* Output Layer */}
           <div className="flex flex-col items-center">
