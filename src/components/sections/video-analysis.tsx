@@ -1,15 +1,29 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Upload, Play, CheckCircle, Target, Zap, Clock, TrendingUp, History } from "lucide-react";
+import { Upload, Play, CheckCircle, Target, Zap, Clock, TrendingUp, History, X, FileVideo } from "lucide-react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart, Radar } from "recharts";
+import chatWithMediaNvcf from "@/controllers/vila-api";
 
 const VideoAnalysis = () => {
   const [dragActive, setDragActive] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisComplete, setAnalysisComplete] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+  const [videoUrl, setVideoUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Cleanup video URL on component unmount
+  useEffect(() => {
+    return () => {
+      if (videoUrl) {
+        URL.revokeObjectURL(videoUrl);
+      }
+    };
+  }, [videoUrl]);
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -27,17 +41,70 @@ const VideoAnalysis = () => {
     setDragActive(false);
     
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      handleAnalysis();
+      const file = e.dataTransfer.files[0];
+      handleFileSelection(file);
     }
   };
 
-  const handleAnalysis = () => {
+  const handleFileSelection = (file: File) => {
+    // Validate file type
+    if (!file.type.startsWith('video/')) {
+      alert('Please select a valid video file (MP4, AVI, MOV)');
+      return;
+    }
+
+    // Validate file size (500MB limit)
+    const maxSize = 500 * 1024 * 1024; // 500MB in bytes
+    if (file.size > maxSize) {
+      alert('File size must be less than 500MB');
+      return;
+    }
+
+    setSelectedFile(file);
+    const url = URL.createObjectURL(file);
+    setVideoUrl(url);
+    setShowPreview(true);
+  };
+
+  const handleFileInputClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      handleFileSelection(file);
+    }
+  };
+
+  const handleCancelPreview = () => {
+    setShowPreview(false);
+    setSelectedFile(null);
+    if (videoUrl) {
+      URL.revokeObjectURL(videoUrl);
+      setVideoUrl("");
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleAnalysis = async () => {
+    const invokeUrl = "https://ai.api.nvidia.com/v1/vlm/nvidia/vila";
+    // const invokeUrl = "/invoke";
+    const stream = false;
+    const query = 'Describe the scene';
+    if (!selectedFile) {
+      handleFileInputClick();
+      return;
+    }
+    
+    setShowPreview(false);
     setAnalyzing(true);
     // Simulate analysis process
-    setTimeout(() => {
-      setAnalyzing(false);
-      setAnalysisComplete(true);
-    }, 3000);
+    await chatWithMediaNvcf(invokeUrl, [selectedFile], query, stream);
+    setAnalysisComplete(true);
+    setAnalyzing(false);
   };
 
   // Mock analysis results
@@ -106,6 +173,14 @@ const VideoAnalysis = () => {
     { date: "2024-01-11", opponent: "ProLegend", result: "Loss", score: "6.8", duration: "25m" }
   ];
 
+  const formatFileSize = (bytes: number) => {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
   return (
     <div className="container mx-auto px-6 py-12">
       <div className="text-center mb-12">
@@ -130,43 +205,113 @@ const VideoAnalysis = () => {
           {/* Upload Interface */}
           <Card className="p-8">
             <div className="text-center">
-              <h3 className="text-2xl font-semibold text-cyber-cyan mb-6">Upload Your Video</h3>
-              <div
-                className={`border-2 border-dashed rounded-lg p-12 transition-all duration-300 ${
-                  dragActive 
-                    ? "border-cyber-cyan bg-cyber-cyan/5 scale-105" 
-                    : "border-border hover:border-cyber-cyan/50"
-                }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-              >
-                {analyzing ? (
-                  <div className="space-y-4">
-                    <div className="animate-spin mx-auto w-12 h-12 border-4 border-cyber-cyan border-t-transparent rounded-full"></div>
-                    <p className="text-cyber-cyan font-semibold">Analyzing your gameplay...</p>
+              <h3 className="text-2xl font-semibold text-cyber-cyan mb-6">
+                {showPreview ? "Video Preview" : "Upload Your Video"}
+              </h3>
+              
+              {/* Hidden file input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="video/*"
+                onChange={handleFileInputChange}
+                className="hidden"
+              />
+
+              {showPreview ? (
+                /* Video Preview */
+                <div className="space-y-6">
+                  <div className="bg-black rounded-lg overflow-hidden">
+                    <video
+                      src={videoUrl}
+                      controls
+                      className="w-full max-h-96 object-contain"
+                      preload="metadata"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  
+                  {/* File Info */}
+                  <div className="bg-surface rounded-lg p-4 border border-border">
+                    <div className="flex items-center gap-3 mb-3">
+                      <FileVideo className="text-cyber-cyan" size={20} />
+                      <span className="font-semibold text-foreground truncate">
+                        {selectedFile?.name}
+                      </span>
+                    </div>
                     <div className="text-sm text-muted-foreground">
-                      Processing video with AI models...
+                      Size: {selectedFile && formatFileSize(selectedFile.size)}
                     </div>
                   </div>
-                ) : (
-                  <div className="space-y-4">
-                    <Upload className="mx-auto text-cyber-cyan" size={48} />
-                    <div>
-                      <p className="text-lg font-semibold text-cyber-cyan mb-2">
-                        Drop your gameplay video here
-                      </p>
-                      <p className="text-muted-foreground mb-4">
-                        Supported: MP4, AVI, MOV (Max 500MB)
-                      </p>
-                      <Button onClick={handleAnalysis} className="w-full">
-                        Select Video File
-                      </Button>
-                    </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-4">
+                    <Button 
+                      onClick={handleAnalysis} 
+                      className="flex-1"
+                      disabled={analyzing}
+                    >
+                      {analyzing ? (
+                        <>
+                          <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"></div>
+                          Analyzing...
+                        </>
+                      ) : (
+                        <>
+                          <Play className="mr-2 h-4 w-4" />
+                          Start Analysis
+                        </>
+                      )}
+                    </Button>
+                    <Button 
+                      onClick={handleCancelPreview} 
+                      variant="outline"
+                      disabled={analyzing}
+                    >
+                      <X className="mr-2 h-4 w-4" />
+                      Cancel
+                    </Button>
                   </div>
-                )}
-              </div>
+                </div>
+              ) : (
+                <div
+                  className={`border-2 border-dashed rounded-lg p-12 transition-all duration-300 ${
+                    dragActive 
+                      ? "border-cyber-cyan bg-cyber-cyan/5 scale-105" 
+                      : "border-border hover:border-cyber-cyan/50"
+                  }`}
+                  onDragEnter={handleDrag}
+                  onDragLeave={handleDrag}
+                  onDragOver={handleDrag}
+                  onDrop={handleDrop}
+                >
+                  {analyzing ? (
+                    <div className="space-y-4">
+                      <div className="animate-spin mx-auto w-12 h-12 border-4 border-cyber-cyan border-t-transparent rounded-full"></div>
+                      <p className="text-cyber-cyan font-semibold">Analyzing your gameplay...</p>
+                      <div className="text-sm text-muted-foreground">
+                        Processing video with AI models...
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <Upload className="mx-auto text-cyber-cyan" size={48} />
+                      <div>
+                        <p className="text-lg font-semibold text-cyber-cyan mb-2">
+                          Drop your gameplay video here
+                        </p>
+                        <p className="text-muted-foreground mb-4">
+                          Supported: MP4, AVI, MOV (Max 500MB)
+                        </p>
+                        <Button onClick={handleFileInputClick} className="w-full">
+                          Select Video File
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </Card>
 
@@ -381,7 +526,18 @@ const VideoAnalysis = () => {
           </Card>
 
           <div className="text-center">
-            <Button variant="outline" onClick={() => setAnalysisComplete(false)}>
+            <Button variant="outline" onClick={() => {
+              setAnalysisComplete(false);
+              setShowPreview(false);
+              setSelectedFile(null);
+              if (videoUrl) {
+                URL.revokeObjectURL(videoUrl);
+                setVideoUrl("");
+              }
+              if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+              }
+            }}>
               Analyze Another Video
             </Button>
           </div>
