@@ -68,8 +68,8 @@ const NeuralNetwork = () => {
   };
 
   const NetworkNode = ({ value, label, isActive }: { value: number; label: string; isActive: boolean }) => (
-    <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 transition-all duration-300 ${
-      isActive ? 'bg-cyber-blue/20 border-cyber-blue' : 'bg-surface border-border'
+    <div className={`flex flex-col items-center justify-center w-16 h-16 rounded-full border-2 transition-all duration-300 mb-4 ${
+      isActive ? 'bg-cyber-blue/20 border-cyber-blue shadow-glow-cyan' : 'bg-surface border-border'
     }`}>
       <div className="text-xs font-mono text-center">
         <div className="text-[10px] text-muted-foreground">{label}</div>
@@ -80,21 +80,22 @@ const NeuralNetwork = () => {
 
   const ConnectionLine = ({ fromCount, toCount, offset = 0 }: { fromCount: number; toCount: number; offset?: number }) => (
     <div className="relative mx-4">
-      <svg width="80" height="200" className="absolute top-0 left-0">
+      <svg width="80" height="240" className="absolute top-0 left-0">
         {Array.from({ length: fromCount }, (_, fromIndex) => 
           Array.from({ length: toCount }, (_, toIndex) => {
-            const fromY = 32 + (fromIndex * 48) + offset;
-            const toY = 32 + (toIndex * 48) + offset;
+            // Calculate center positions of nodes (32px = half of 64px node size)
+            const fromY = 32 + (fromIndex * 68) + offset; // 68px spacing between nodes
+            const toY = 32 + (toIndex * 68) + offset;
             return (
               <line
                 key={`${fromIndex}-${toIndex}`}
-                x1="16"
+                x1="32" // Start from center of from-node
                 y1={fromY}
-                x2="64"
+                x2="48" // End at center of to-node
                 y2={toY}
                 stroke="hsl(var(--cyber-blue))"
-                strokeWidth="1"
-                strokeOpacity="0.4"
+                strokeWidth="1.5"
+                strokeOpacity="0.6"
                 className="transition-all duration-300"
               />
             );
@@ -150,7 +151,7 @@ const NeuralNetwork = () => {
           {/* Input Layer */}
           <div className="flex flex-col items-center">
             <h4 className="text-sm font-medium text-cyber-blue mb-4">Game State</h4>
-            <div className="space-y-4">
+            <div className="space-y-1">
               {inputs.map((input, index) => {
                 const labels = ["X", "Y", "HP", "EHP", "MP"];
                 return (
@@ -170,7 +171,7 @@ const NeuralNetwork = () => {
           {/* Hidden Layer 1 */}
           <div className="flex flex-col items-center">
             <h4 className="text-sm font-medium text-cyber-blue mb-4">Hidden Layer 1</h4>
-            <div className="space-y-4">
+            <div className="space-y-1">
               {hiddenLayer1.map((hidden, index) => (
                 <NetworkNode
                   key={index}
@@ -187,7 +188,7 @@ const NeuralNetwork = () => {
           {/* Hidden Layer 2 */}
           <div className="flex flex-col items-center">
             <h4 className="text-sm font-medium text-cyber-blue mb-4">Hidden Layer 2</h4>
-            <div className="space-y-4">
+            <div className="space-y-1">
               {hiddenLayer2.map((hidden, index) => (
                 <NetworkNode
                   key={index}

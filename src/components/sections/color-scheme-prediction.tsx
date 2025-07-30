@@ -113,7 +113,7 @@ const ColorSchemePrediction = () => {
             <Input
               id="gameId"
               type="text"
-              placeholder="e.g., APE-2024-USER-1337"
+              placeholder="ENTER your GAME ID (e.g., Player#1234)"
               value={gameId}
               onChange={(e) => setGameId(e.target.value)}
               className="text-lg"

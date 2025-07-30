@@ -131,6 +131,66 @@ const Community = () => {
       replies: 41,
       timeAgo: "5 days ago",
       trending: true
+    },
+    {
+      id: 11,
+      author: "ShadowNinja",
+      avatar: "SN",
+      title: "Stealth strategies and ambush tactics",
+      content: "Master the art of stealth gameplay with these advanced ambush techniques and positioning strategies for surprise attacks...",
+      category: "strategy",
+      likes: 28,
+      replies: 9,
+      timeAgo: "6 days ago",
+      trending: false
+    },
+    {
+      id: 12,
+      author: "DragonSlayer",
+      avatar: "DS",
+      title: "Boss fight patterns and optimal damage windows",
+      content: "Detailed analysis of boss attack patterns and the best timing for maximum damage output during raid encounters...",
+      category: "tips",
+      likes: 54,
+      replies: 18,
+      timeAgo: "1 week ago",
+      trending: true
+    },
+    {
+      id: 13,
+      author: "GuildLeader",
+      avatar: "GL",
+      title: "Building and managing successful gaming communities",
+      content: "Leadership tips for guild masters and community managers on fostering positive environments and coordinating group activities...",
+      category: "teamwork",
+      likes: 39,
+      replies: 26,
+      timeAgo: "1 week ago",
+      trending: false
+    },
+    {
+      id: 14,
+      author: "SpeedRunner",
+      avatar: "SR",
+      title: "Optimization techniques for faster clear times",
+      content: "Advanced movement optimization and route planning for competitive speedrunning and efficient dungeon clearing...",
+      category: "improvement",
+      likes: 47,
+      replies: 13,
+      timeAgo: "1 week ago",
+      trending: true
+    },
+    {
+      id: 15,
+      author: "CrafterMaster",
+      avatar: "CM",
+      title: "Resource management and crafting efficiency",
+      content: "Complete guide to resource allocation, crafting rotations, and market strategies for maximizing your in-game economy...",
+      category: "tips",
+      likes: 36,
+      replies: 21,
+      timeAgo: "2 weeks ago",
+      trending: false
     }
   ];
 
