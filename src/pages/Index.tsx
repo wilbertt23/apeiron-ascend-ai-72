@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 
 import VideoAnalysis from "@/components/sections/video-analysis";
 import GameIDAnalysis from "@/components/sections/gameid-analysis";
-import BattleAnalysis from "@/components/sections/battle-analysis";
 import ColorSchemePrediction from "@/components/sections/color-scheme-prediction";
 import Productization from "@/components/sections/productization";
 import NeuralNetwork from "@/components/sections/neural-network";
@@ -31,8 +30,6 @@ const Index = () => {
         return <VideoAnalysis />;
       case "gameid":
         return <GameIDAnalysis />;
-      case "battle":
-        return <BattleAnalysis />;
       case "color":
         return <ColorSchemePrediction />;
       case "product":
