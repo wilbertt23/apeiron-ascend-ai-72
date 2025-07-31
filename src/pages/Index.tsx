@@ -1,10 +1,11 @@
 import { useState } from "react";
 import HeroSection from "@/components/hero-section";
-import NavigationTabs from "@/components/navigation-tabs";
-import ReinforcementLearning from "@/components/sections/reinforcement-learning";
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
+import ReinforcementLearning from "@/components/sections/reinforcement-learning";
 import VideoAnalysis from "@/components/sections/video-analysis";
 import GameIDAnalysis from "@/components/sections/gameid-analysis";
 import ColorSchemePrediction from "@/components/sections/color-scheme-prediction";
@@ -44,26 +45,37 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <HeroSection />
-      <div className="pt-8">
-        <NavigationTabs activeTab={activeTab} onTabChange={setActiveTab} />
+    <SidebarProvider>
+      <div className="min-h-screen flex w-full bg-background">
+        <AppSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        
+        <div className="flex-1 flex flex-col">
+          {/* Header with menu trigger */}
+          <header className="h-16 flex items-center border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-40">
+            <SidebarTrigger className="ml-4" />
+            <h1 className="ml-4 text-lg font-semibold">AI Research Platform</h1>
+          </header>
+
+          <div className="flex-1">
+            <HeroSection />
+            <main>
+              {renderActiveSection()}
+            </main>
+          </div>
+        </div>
+        
+        {/* Back to top button */}
+        <div className="fixed bottom-8 right-8 z-50">
+          <Button
+            onClick={scrollToTop}
+            size="icon"
+            className="rounded-full bg-cyber-cyan hover:bg-cyber-cyan/80 text-black shadow-lg hover:shadow-glow-cyan transition-all duration-300"
+          >
+            <ArrowUp size={20} />
+          </Button>
+        </div>
       </div>
-      <main>
-        {renderActiveSection()}
-      </main>
-      
-      {/* Back to top button */}
-      <div className="fixed bottom-8 right-8 z-50">
-        <Button
-          onClick={scrollToTop}
-          size="icon"
-          className="rounded-full bg-cyber-cyan hover:bg-cyber-cyan/80 text-black shadow-lg hover:shadow-glow-cyan transition-all duration-300"
-        >
-          <ArrowUp size={20} />
-        </Button>
-      </div>
-    </div>
+    </SidebarProvider>
   );
 };
 

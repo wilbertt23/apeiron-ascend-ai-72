@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Car, Bot, Factory } from "lucide-react";
+import { Car, Bot, Heart } from "lucide-react";
 
 const Productization = () => {
   const applications = [
@@ -43,21 +43,21 @@ const Productization = () => {
       color: "cyber-blue"
     },
     {
-      icon: Factory,
-      title: "AI Enabled Health Services",
-      description: "Smart factory systems with reinforcement learning for optimized production workflows",
+      icon: Heart,
+      title: "AI-Enabled Health Services",
+      description: "Advanced healthcare AI systems leveraging machine learning for personalized treatment and predictive diagnostics",
       features: [
-        "Advanced patient data analysis",
-        "Real-time health monitoring",
-        "Adaptive treatment recommendations",
-        "Early disease detection algorithms",
-        "Integrated health coordination"
+        "Medical imaging analysis with 98% accuracy",
+        "Predictive disease modeling",
+        "Personalized treatment optimization",
+        "Real-time patient monitoring",
+        "Drug discovery acceleration"
       ],
       benefits: [
-        "reduced healthcare costs",
-        "enhanced preventive care",
-        "improved patient outcomes",
-        "better efficiency of healthcare delivery"
+        "50% faster diagnosis",
+        "35% reduced treatment costs", 
+        "90% early detection rate",
+        "24/7 continuous monitoring"
       ],
       color: "cyber-purple"
     }
