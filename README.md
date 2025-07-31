@@ -32,7 +32,10 @@ cd <YOUR_PROJECT_NAME>
 # Step 3: Install the necessary dependencies.
 npm i
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Step 4: Start the server for calling the video analysis api
+node server.js
+
+# Step 5: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
