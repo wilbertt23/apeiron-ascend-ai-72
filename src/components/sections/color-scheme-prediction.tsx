@@ -22,32 +22,15 @@ const ColorSchemePrediction = () => {
     
     // Simulate analysis delay
     setTimeout(() => {
-      // Generate pseudo-random but consistent results based on gameId
-      const hash = gameId.split('').reduce((a, b) => {
-        a = ((a << 5) - a) + b.charCodeAt(0);
-        return a & a;
-      }, 0);
-      
-      const normalizedHash = Math.abs(hash) % 1000;
-      
-      // Calculate RGB values based on hash
-      const aggressiveness = (normalizedHash % 100) / 100;
-      const tactical = ((normalizedHash * 13) % 100) / 100;
-      const defensiveness = ((normalizedHash * 7) % 100) / 100;
-      
-      // Normalize to ensure they don't all max out
-      const total = aggressiveness + tactical + defensiveness;
-      const normalizedAgg = (aggressiveness / total) * 0.8 + 0.1;
-      const normalizedTac = (tactical / total) * 0.8 + 0.1;
-      const normalizedDef = (defensiveness / total) * 0.8 + 0.1;
-      
-      const r = Math.round(normalizedAgg * 255);
-      const g = Math.round(normalizedTac * 255);
-      const b = Math.round(normalizedDef * 255);
+      // Generate truly random RGB values for different results each time
+      const r = Math.floor(Math.random() * 156) + 100; // Random between 100-255
+      const g = Math.floor(Math.random() * 156) + 100; // Random between 100-255
+      const b = Math.floor(Math.random() * 156) + 100; // Random between 100-255
       
       let style = "Balanced";
-      let confidence = 75;
+      let confidence = Math.floor(Math.random() * 20) + 70; // Random between 70-90
       
+      // Determine style based on dominant color
       if (r > g && r > b) {
         style = "Aggressive";
         confidence = Math.round(65 + (r / 255) * 30);
@@ -92,9 +75,9 @@ const ColorSchemePrediction = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-12">
+    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-cyber-pink mb-4">Color Scheme Prediction</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-cyber-pink mb-4">Color Scheme Prediction</h2>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
           Discover your unique playstyle through color analysis. Enter your Game ID to reveal your gaming personality through RGB color mapping.
         </p>

@@ -42,12 +42,12 @@ const ProjectGoals = () => {
   ];
 
   return (
-    <section className="py-16 px-6 max-w-6xl mx-auto">
+    <section className="py-8 sm:py-16 px-4 sm:px-6 max-w-6xl mx-auto">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4">
           Project Goals & Objectives
         </h2>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
           Our mission is to revolutionize competitive gaming through intelligent AI and comprehensive analytics
         </p>
       </div>
@@ -67,17 +67,17 @@ const ProjectGoals = () => {
       </div>
 
       {/* Main Goals */}
-      <div className="grid md:grid-cols-2 gap-8 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12">
         {goals.map((goal, index) => {
           const Icon = goal.icon;
           return (
-            <Card key={index} className={`p-6 bg-surface border-${goal.color}/20 hover:shadow-glow-${goal.color.split('-')[1]} transition-all duration-300`}>
+            <Card key={index} className={`p-4 sm:p-6 bg-surface border-${goal.color}/20 hover:shadow-glow-${goal.color.split('-')[1]} transition-all duration-300`}>
               <div className="flex items-start gap-4">
                 <div className={`p-3 rounded-full bg-${goal.color}/10 border border-${goal.color}/30`}>
                   <Icon className={`text-${goal.color}`} size={24} />
                 </div>
                 <div className="flex-1">
-                  <h3 className={`text-xl font-semibold text-${goal.color} mb-3`}>
+                  <h3 className={`text-lg sm:text-xl font-semibold text-${goal.color} mb-3`}>
                     {goal.title}
                   </h3>
                   <p className="text-muted-foreground mb-4">
@@ -103,7 +103,7 @@ const ProjectGoals = () => {
         <h3 className="text-2xl font-semibold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
           Implementation Roadmap
         </h3>
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           <div className="text-center">
             <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-cyber-cyan/20 border-2 border-cyber-cyan flex items-center justify-center">
               <span className="text-sm font-bold text-cyber-cyan">Q1</span>

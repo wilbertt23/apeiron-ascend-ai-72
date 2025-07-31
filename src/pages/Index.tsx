@@ -12,9 +12,15 @@ import ColorSchemePrediction from "@/components/sections/color-scheme-prediction
 import Productization from "@/components/sections/productization";
 import NeuralNetwork from "@/components/sections/neural-network";
 import Community from "@/components/sections/community";
+import ProjectGoals from "@/components/sections/project-goals";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState("reinforcement");
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -23,31 +29,10 @@ const Index = () => {
     });
   };
 
-  const renderActiveSection = () => {
-    switch (activeTab) {
-      case "reinforcement":
-        return <ReinforcementLearning />;
-      case "video":
-        return <VideoAnalysis />;
-      case "gameid":
-        return <GameIDAnalysis />;
-      case "color":
-        return <ColorSchemePrediction />;
-      case "product":
-        return <Productization />;
-      case "neural":
-        return <NeuralNetwork />;
-      case "community":
-        return <Community />;
-      default:
-        return <ReinforcementLearning />;
-    }
-  };
-
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
-        <AppSidebar activeTab={activeTab} onTabChange={setActiveTab} />
+        <AppSidebar onNavigate={scrollToSection} />
         
         <div className="flex-1 flex flex-col">
           {/* Header with menu trigger */}
@@ -58,8 +43,15 @@ const Index = () => {
 
           <div className="flex-1">
             <HeroSection />
-            <main>
-              {renderActiveSection()}
+            <main className="space-y-0">
+              <div id="project-goals"><ProjectGoals /></div>
+              <div id="reinforcement"><ReinforcementLearning /></div>
+              <div id="video"><VideoAnalysis /></div>
+              <div id="gameid"><GameIDAnalysis /></div>
+              <div id="color"><ColorSchemePrediction /></div>
+              <div id="product"><Productization /></div>
+              <div id="neural"><NeuralNetwork /></div>
+              <div id="community"><Community /></div>
             </main>
           </div>
         </div>

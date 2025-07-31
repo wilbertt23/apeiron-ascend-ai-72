@@ -136,7 +136,7 @@ const VideoAnalysis = () => {
 
   // Generate random skill data for different results each time
   const generateRandomSkillData = () => {
-    const skills = ["Off", "Def", "Man", "Ski", "Tac", "Pos"];
+    const skills = ["Off", "Def", "Man", "Tac", "Ski"];
     return skills.map(skill => ({
       skill,
       value: Math.floor(Math.random() * 40) + 60, // Random value between 60-100
@@ -144,14 +144,13 @@ const VideoAnalysis = () => {
     }));
   };
 
-  // Hexagon radar data for skills
+  // Pentagon radar data for skills
   const skillData = analysisComplete ? generateRandomSkillData() : [
     { skill: "Off", value: 0, fullMark: 100 },
     { skill: "Def", value: 0, fullMark: 100 },
     { skill: "Man", value: 0, fullMark: 100 },
-    { skill: "Ski", value: 0, fullMark: 100 },
     { skill: "Tac", value: 0, fullMark: 100 },
-    { skill: "Pos", value: 0, fullMark: 100 }
+    { skill: "Ski", value: 0, fullMark: 100 }
   ];
 
   // Bar chart data
@@ -159,9 +158,8 @@ const VideoAnalysis = () => {
     { name: "Offense", value: skillData.find(s => s.skill === "Off")?.value || 0 },
     { name: "Defense", value: skillData.find(s => s.skill === "Def")?.value || 0 },
     { name: "Mana Management", value: skillData.find(s => s.skill === "Man")?.value || 0 },
-    { name: "Skill Usage", value: skillData.find(s => s.skill === "Ski")?.value || 0 },
     { name: "Tactics", value: skillData.find(s => s.skill === "Tac")?.value || 0 },
-    { name: "Positioning", value: skillData.find(s => s.skill === "Pos")?.value || 0 }
+    { name: "Skill Usage", value: skillData.find(s => s.skill === "Ski")?.value || 0 }
   ];
 
   // Match history data
@@ -182,9 +180,9 @@ const VideoAnalysis = () => {
   };
 
   return (
-    <div className="container mx-auto px-6 py-12">
+    <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-cyber-pink mb-4">AI Video Analysis</h2>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-cyber-pink mb-4">AI Video Analysis</h2>
         <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
           Upload your gameplay videos and get detailed AI-powered analysis of your performance, strategies, and improvement opportunities.
         </p>
@@ -427,7 +425,7 @@ const VideoAnalysis = () => {
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               {/* Hexagon Chart */}
               <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-center">Skill Hexagon</h4>
+                <h4 className="text-lg font-semibold text-center">Skill Pentagon</h4>
                 <ResponsiveContainer width="100%" height={300}>
                   <RadarChart data={skillData}>
                     <PolarGrid stroke="hsl(var(--border))" />

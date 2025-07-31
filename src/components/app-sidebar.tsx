@@ -1,4 +1,4 @@
-import { Brain, Target, Video, GamepadIcon, Building2, Network, Users, Palette } from "lucide-react";
+import { Brain, Target, Video, GamepadIcon, Building2, Network, Users, Palette, Lightbulb } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -18,26 +18,26 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
+  { id: "project-goals", label: "Project Goals", icon: Lightbulb },
   { id: "reinforcement", label: "Reinforcement Learning", icon: Brain },
   { id: "video", label: "Video Analysis", icon: Video },
   { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon }, 
   { id: "color", label: "Color Scheme Prediction", icon: Palette },
-  { id: "product", label: "Productization", icon: Building2 },
+  { id: "product", label: "AI Health Services", icon: Building2 },
   { id: "neural", label: "Neural Network", icon: Network },
   { id: "community", label: "Community", icon: Users },
 ];
 
 interface AppSidebarProps {
-  activeTab: string;
-  onTabChange: (tabId: string) => void;
+  onNavigate: (sectionId: string) => void;
 }
 
-export function AppSidebar({ activeTab, onTabChange }: AppSidebarProps) {
+export function AppSidebar({ onNavigate }: AppSidebarProps) {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
 
   return (
-    <Sidebar className={collapsed ? "w-14" : "w-64"} collapsible="icon">
+    <Sidebar className={`${collapsed ? "w-14" : "w-64"} lg:${collapsed ? "w-14" : "w-64"} md:${collapsed ? "w-14" : "w-56"} sm:${collapsed ? "w-12" : "w-52"}`} collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-primary font-semibold">
@@ -47,21 +47,16 @@ export function AppSidebar({ activeTab, onTabChange }: AppSidebarProps) {
             <SidebarMenu>
               {tabs.map((tab) => {
                 const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
                 
                 return (
                   <SidebarMenuItem key={tab.id}>
                     <SidebarMenuButton
-                      onClick={() => onTabChange(tab.id)}
-                      className={`flex items-center gap-3 transition-all duration-300 ${
-                        isActive 
-                          ? "bg-primary/20 text-primary border-l-2 border-primary" 
-                          : "hover:bg-muted/50"
-                      }`}
+                      onClick={() => onNavigate(tab.id)}
+                      className="flex items-center gap-3 transition-all duration-300 hover:bg-primary/10 hover:text-primary"
                     >
-                      <Icon size={20} className={isActive ? "text-primary" : "text-muted-foreground"} />
+                      <Icon size={20} className="text-muted-foreground hover:text-primary" />
                       {!collapsed && (
-                        <span className={isActive ? "text-primary font-medium" : "text-foreground"}>
+                        <span className="text-foreground hover:text-primary text-sm">
                           {tab.label}
                         </span>
                       )}
