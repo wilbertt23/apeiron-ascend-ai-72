@@ -6,6 +6,7 @@ import { Upload, Play, CheckCircle, Target, Zap, Clock, TrendingUp, History, X, 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart, Radar } from "recharts";
 import analyzeMedia from "@/controllers/vila-api";
 
+
 const VideoAnalysis = () => {
   const [dragActive, setDragActive] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -15,6 +16,7 @@ const VideoAnalysis = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [analysisResults, setAnalysisResults] = useState<any>(null);
 
   // Cleanup video URL on component unmount
   useEffect(() => {
@@ -94,6 +96,53 @@ const VideoAnalysis = () => {
     // const invokeUrl = "/invoke";
     const stream = false;
     const query = 'Describe the scene';
+    const prompt = `
+    You are a professional video game analyst. You are given a video of me playing a video game called Apeiron.
+    My characters have a green health bar above them, and the enemy characters have a red health bar above them.
+    My mana count is displayed in the buttom right corner of the screen, under the user's deck. Mana is used to cast spells.
+
+    Analyze my performance on the following metrics:
+    - Overall performance: How well I perform in the game. (0-10, one decimal place)
+    - Gameplay style: How I play the game. (choose from [Aggressive, Passive, Balanced])
+    - Actions per minute: How many actions I take per minute. (int)
+    - Accuracy: How many skills landed on the enemy. (percentage)
+    - Efficiency: Mana efficiency, how much mana is used per skill. (percentage)
+    - Apaptability: How well I adapt to the enemy's actions. (percentage)
+
+    And provide the following detailed skill analysis:
+    - Offensiveness
+    - Defensiveness
+    - Mana management
+    - Skill usage
+    - Tactics
+    - Positioning
+
+    Also, provide a detailed positive and negative suggestion of my gameplay based on the analysis in a 3 sentences paragraph. Assume that you are talking directly to the player.
+
+    Format the response in a JSON object with the following structure:
+    {
+        "overallScore": ,
+        "playstyle": ,
+        "metrics": {
+            "apm": ,
+            "accuracy": ,
+            "efficiency": ,
+            "adaptability": 
+        },
+        "skillData":{
+            "offensiveness": ,
+            "defensiveness": ,
+            "manaManagement": ,
+            "skillUsage": ,
+            "tactics": ,
+            "positioning": 
+        },
+        "negative_suggestion":,
+        "positive_suggestion":
+    }
+
+    Only return the JSON object, no other text or comments.
+    `;
     if (!selectedFile) {
       handleFileInputClick();
       return;
@@ -102,37 +151,40 @@ const VideoAnalysis = () => {
     setShowPreview(false);
     setAnalyzing(true);
     // Simulate analysis process
-    await analyzeMedia([selectedFile], query);
+    const response = await analyzeMedia([selectedFile], prompt);
+    const responseJson = JSON.parse(response);
+    console.log(typeof responseJson);
+    setAnalysisResults(responseJson);
     setAnalysisComplete(true);
     setAnalyzing(false);
   };
 
   // Mock analysis results
-  const analysisResults = {
-    overallScore: "8.7",
-    playstyle: "Aggressive Strategist",
-    strengths: [
-      "Excellent reaction time",
-      "Strong positioning",
-      "Good resource management"
-    ],
-    weaknesses: [
-      "Tendency to overextend",
-      "Inconsistent last-hitting",
-      "Map awareness gaps"
-    ],
-    suggestions: [
-      "Practice safe positioning during team fights",
-      "Focus on minimap awareness training",
-      "Work on farming efficiency in early game"
-    ],
-    metrics: {
-      apm: 285,
-      accuracy: 78,
-      efficiency: 82,
-      adaptability: 75
-    }
-  };
+  // const analysisResults = {
+  //   overallScore: "8.7",
+  //   playstyle: "Aggressive Strategist",
+  //   strengths: [
+  //     "Excellent reaction time",
+  //     "Strong positioning",
+  //     "Good resource management"
+  //   ],
+  //   weaknesses: [
+  //     "Tendency to overextend",
+  //     "Inconsistent last-hitting",
+  //     "Map awareness gaps"
+  //   ],
+  //   suggestions: [
+  //     "Practice safe positioning during team fights",
+  //     "Focus on minimap awareness training",
+  //     "Work on farming efficiency in early game"
+  //   ],
+  //   metrics: {
+  //     apm: 285,
+  //     accuracy: 78,
+  //     efficiency: 82,
+  //     adaptability: 75
+  //   }
+  // };
 
   // Generate random skill data for different results each time
   const generateRandomSkillData = () => {
@@ -145,7 +197,16 @@ const VideoAnalysis = () => {
   };
 
   // Pentagon radar data for skills
-  const skillData = analysisComplete ? generateRandomSkillData() : [
+  const skillData = analysisComplete ? 
+  [
+    { skill: "Off", value: analysisResults.skillData.offensiveness, fullMark: 100 },
+    { skill: "Def", value: analysisResults.skillData.defensiveness, fullMark: 100 },
+    { skill: "Man", value: analysisResults.skillData.manaManagement, fullMark: 100 },
+    { skill: "Tac", value: analysisResults.skillData.tactics, fullMark: 100 },
+    { skill: "Ski", value: analysisResults.skillData.skillUsage, fullMark: 100 }
+  ]
+
+  : [
     { skill: "Off", value: 0, fullMark: 100 },
     { skill: "Def", value: 0, fullMark: 100 },
     { skill: "Man", value: 0, fullMark: 100 },
@@ -481,12 +542,9 @@ const VideoAnalysis = () => {
                 Strengths
               </h3>
               <div className="space-y-2">
-                {analysisResults.strengths.map((strength, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-cyber-cyan rounded-full"></div>
-                    <span className="text-foreground">{strength}</span>
-                  </div>
-                ))}
+              <div className="flex items-center gap-2">
+                  <span className="text-foreground">{analysisResults.positive_suggestion}</span>
+                </div>
               </div>
             </Card>
 
@@ -496,32 +554,27 @@ const VideoAnalysis = () => {
                 Areas for Improvement
               </h3>
               <div className="space-y-2">
-                {analysisResults.weaknesses.map((weakness, index) => (
-                  <div key={index} className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-destructive rounded-full"></div>
-                    <span className="text-foreground">{weakness}</span>
-                  </div>
-                ))}
+                <div className="flex items-center gap-2">
+                  <span className="text-foreground">{analysisResults.negative_suggestion}</span>
+                </div>
               </div>
             </Card>
           </div>
 
-          {/* Suggestions */}
+          {/* Suggestions
           <Card className="p-8 bg-surface">
             <h3 className="text-2xl font-semibold text-cyber-blue mb-6">Personalized Recommendations</h3>
             <div className="space-y-4">
-              {analysisResults.suggestions.map((suggestion, index) => (
-                <div key={index} className="p-4 rounded-lg bg-cyber-blue/5 border border-cyber-blue/20">
+            <div className="p-4 rounded-lg bg-cyber-blue/5 border border-cyber-blue/20">
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-cyber-blue/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-bold text-cyber-blue">{index + 1}</span>
+                      <span className="text-xs font-bold text-cyber-blue"></span>
                     </div>
-                    <p className="text-foreground">{suggestion}</p>
+                    <p className="text-foreground">{analysisResults.negative_suggestion}</p>
                   </div>
                 </div>
-              ))}
             </div>
-          </Card>
+          </Card> */}
 
           <div className="text-center">
             <Button variant="outline" onClick={() => {

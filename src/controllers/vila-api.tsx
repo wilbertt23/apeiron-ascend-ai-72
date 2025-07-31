@@ -11,7 +11,7 @@ const BACKEND_API_URL = 'http://localhost:3001';
  * @param query - Text query/question about the media (default: 'Describe the scene')
  * @returns Promise with the analysis result from NVIDIA Vila API
  */
-export async function analyzeMedia(mediaFiles: File[], query: string = 'Describe the scene'): Promise<any> {
+export async function analyzeMedia(mediaFiles: File[], query: string): Promise<any> {
   try {
     // Create FormData to send files to backend
     const formData = new FormData();
