@@ -36,6 +36,54 @@ const kSupportedList = {
   "mp4": ["video/mp4", "video"]
 };
 
+const query = `
+You are a professional video game analyst. You are given a video of me playing a video game called Apeiron.
+My characters have a green health bar above them, and the enemy characters have a red health bar above them.
+My mana count is displayed in the buttom right corner of the screen, under the user's deck. Mana is used to cast spells.
+Analyze my performance on the following metrics:
+- Overall performance: How well the player performs in the game. (0-10, one decimal place)
+- Gameplay style: How the player plays the game. (aggressive, passive, balanced, etc.)
+- Actions per minute: How many actions the player takes per minute. (int)
+- Accuracy: How many skills landed on the enemy. (percentage)
+- Efficiency: Mana efficiency, how much mana is used per skill. (percentage)
+- Apaptability: How well the player adapts to the enemy's actions. (percentage)
+And provide the following detailed skill analysis:
+- Offensiveness
+- Defensiveness
+- Mana management
+- Skill usage
+- Tactics
+- Positioning
+Also, provide a detailed analysis of my strengths and weaknesses in short sentences.
+- Strengths: based on my performance, what are my strengths? (2-3 points, with explinations)
+- Weaknesses: based on my performance, what are my weaknesses? (2-3 points, with explinations)
+
+
+Format the response in a JSON object with the following structure:
+{
+    "overallScore": ,
+    "playstyle": ,
+    "metrics": {
+        "apm": ,
+        "accuracy": ,
+        "efficiency": ,
+        "adaptability": 
+    },
+    "skillData":{
+        "offensiveness": ,
+        "defensiveness": ,
+        "manaManagement": ,
+        "skillUsage": ,
+        "tactics": ,
+        "positioning": 
+    },
+    "strengths": ,
+    "weaknesses": 
+}
+
+Only return the JSON object, no other text or comments.
+`;
+
 function getExtension(filename) {
   const lastDotIndex = filename.lastIndexOf('.');
   if (lastDotIndex === -1) return '';
