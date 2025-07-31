@@ -38,7 +38,7 @@ const Index = () => {
           {/* Header with menu trigger */}
           <header className="h-16 flex items-center border-b border-border bg-surface/80 backdrop-blur-sm sticky top-0 z-40">
             <SidebarTrigger className="ml-4" />
-            <h1 className="ml-4 text-lg font-semibold">AI Research Platform</h1>
+            <h1 className="ml-4 text-lg font-semibold">Apeiron</h1>
           </header>
 
           <div className="flex-1">
