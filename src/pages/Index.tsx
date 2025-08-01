@@ -5,23 +5,7 @@ import { Button } from "@/components/ui/button";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 
-import ReinforcementLearning from "@/components/sections/reinforcement-learning";
-import VideoAnalysis from "@/components/sections/video-analysis";
-import GameIDAnalysis from "@/components/sections/gameid-analysis";
-import ColorSchemePrediction from "@/components/sections/color-scheme-prediction";
-import Productization from "@/components/sections/productization";
-import NeuralNetwork from "@/components/sections/neural-network";
-import Community from "@/components/sections/community";
-import ProjectGoals from "@/components/sections/project-goals";
-
 const Index = () => {
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -32,7 +16,7 @@ const Index = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
-        <AppSidebar onNavigate={scrollToSection} />
+        <AppSidebar />
         
         <div className="flex-1 flex flex-col">
           {/* Header with menu trigger */}
@@ -43,16 +27,6 @@ const Index = () => {
 
           <div className="flex-1">
             <HeroSection />
-            <main className="space-y-0">
-              <div id="project-goals"><ProjectGoals /></div>
-              <div id="reinforcement"><ReinforcementLearning /></div>
-              <div id="video"><VideoAnalysis /></div>
-              <div id="gameid"><GameIDAnalysis /></div>
-              <div id="color"><ColorSchemePrediction /></div>
-              <div id="product"><Productization /></div>
-              <div id="neural"><NeuralNetwork /></div>
-              <div id="community"><Community /></div>
-            </main>
           </div>
         </div>
         

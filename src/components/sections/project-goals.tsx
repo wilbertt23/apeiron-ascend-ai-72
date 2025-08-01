@@ -52,19 +52,6 @@ const ProjectGoals = () => {
         </p>
       </div>
 
-      {/* Key Metrics */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-        {keyMetrics.map((metric, index) => (
-          <Card key={index} className="p-4 text-center bg-surface border-border hover:shadow-glow-cyan transition-all duration-300">
-            <div className={`text-2xl font-bold text-${metric.color} mb-1`}>
-              {metric.value}
-            </div>
-            <div className="text-sm text-muted-foreground">
-              {metric.label}
-            </div>
-          </Card>
-        ))}
-      </div>
 
       {/* Main Goals */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-12">
