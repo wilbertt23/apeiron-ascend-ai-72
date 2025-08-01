@@ -20,7 +20,8 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
-  { id: "project-goals", label: "Project Goals", icon: Lightbulb, path: "/project-goals" },
+  { id: "home", label: "Home", icon: Lightbulb, path: "/" },
+  { id: "project-goals", label: "Project Goals", icon: Target, path: "/project-goals" },
   { id: "reinforcement", label: "Reinforcement Learning", icon: Brain, path: "/reinforcement" },
   { id: "video", label: "Video Analysis", icon: Video, path: "/video" },
   { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon, path: "/gameid" }, 
