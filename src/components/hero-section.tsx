@@ -85,46 +85,6 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Project Goals Section */}
-        <div className="pt-16 border-t border-border">
-          <h2 className="text-3xl font-bold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
-            Project Goals
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-6 rounded-xl bg-surface border border-border h-full flex flex-col">
-              <Target className="mb-4 text-cyber-cyan" size={28} />
-              <h3 className="text-lg font-semibold mb-2 text-cyber-cyan">Enhanced Gaming Experience</h3>
-              <p className="text-sm text-muted-foreground flex-1">
-                Provide personalized AI coaching and real-time performance optimization for Apeiron players
-              </p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-surface border border-border h-full flex flex-col">
-              <Brain className="mb-4 text-cyber-blue" size={28} />
-              <h3 className="text-lg font-semibold mb-2 text-cyber-blue">Advanced AI Development</h3>
-              <p className="text-sm text-muted-foreground flex-1">
-                Create sophisticated reinforcement learning models that adapt to individual playstyles
-              </p>
-            </div>
-            
-            <div className="p-6 rounded-xl bg-surface border border-border h-full flex flex-col">
-              <TrendingUp className="mb-4 text-cyber-purple" size={28} />
-              <h3 className="text-lg font-semibold mb-2 text-cyber-purple">Data-Driven Insights</h3>
-              <p className="text-sm text-muted-foreground flex-1">
-                Deliver comprehensive analytics and strategic recommendations through advanced data analysis
-              </p>
-            </div>
-
-            <div className="p-6 rounded-xl bg-surface border border-border h-full flex flex-col">
-              <Zap className="mb-4 text-cyber-pink" size={28} />
-              <h3 className="text-lg font-semibold mb-2 text-cyber-pink">Community Empowerment</h3>
-              <p className="text-sm text-muted-foreground flex-1">
-                Democratize AI-powered gaming tools for the broader gaming community and enable widespread adoption
-              </p>
-            </div>
-          </div>
-          <div className="mt-16"></div>
-        </div>
       </div>
     </section>
   );
