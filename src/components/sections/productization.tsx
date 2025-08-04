@@ -114,15 +114,15 @@ const Productization = () => {
 
                 {/* Right Side - Benefits */}
                 <div className="flex flex-col justify-center">
-                  <h4 className="text-lg font-semibold text-foreground mb-4">Impact & Benefits</h4>
-                  <div className="grid grid-cols-2 gap-4">
+                  <h4 className="text-lg font-semibold text-foreground mb-6">Impact & Benefits</h4>
+                  <div className="space-y-4">
                     {app.benefits.map((benefit, benefitIndex) => (
-                      <div key={benefitIndex} className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-                        <div className="text-center">
-                          <div className="text-lg font-bold text-primary mb-1">
+                      <div key={benefitIndex} className="p-6 rounded-lg bg-primary/5 border border-primary/20 hover:bg-primary/10 transition-colors">
+                        <div className="flex items-center gap-4">
+                          <div className="text-2xl font-bold text-primary min-w-fit">
                             {benefit.split(' ')[0]}
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-base text-foreground font-medium">
                             {benefit.split(' ').slice(1).join(' ')}
                           </div>
                         </div>
@@ -137,12 +137,12 @@ const Productization = () => {
       </div>
 
       {/* Technology Foundation */}
-      <Card className="p-8 mt-12 bg-gradient-primary">
-        <h3 className="text-2xl font-semibold text-center mb-8 text-background">Technology Foundation</h3>
+      <Card className="p-8 mt-12 bg-surface border border-border">
+        <h3 className="text-2xl font-semibold text-center mb-8 text-foreground">Technology Foundation</h3>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <h4 className="text-xl font-semibold text-background">Reinforcement Learning</h4>
-            <ul className="space-y-2 text-background/90">
+            <h4 className="text-xl font-semibold text-primary">Reinforcement Learning</h4>
+            <ul className="space-y-2 text-muted-foreground">
               <li>• Adaptive decision-making algorithms</li>
               <li>• Continuous learning from experience</li>
               <li>• Multi-agent coordination systems</li>
@@ -150,8 +150,8 @@ const Productization = () => {
             </ul>
           </div>
           <div className="space-y-4">
-            <h4 className="text-xl font-semibold text-background">Real-Time Data Analysis</h4>
-            <ul className="space-y-2 text-background/90">
+            <h4 className="text-xl font-semibold text-primary">Real-Time Data Analysis</h4>
+            <ul className="space-y-2 text-muted-foreground">
               <li>• Sub-millisecond response times</li>
               <li>• High-frequency data processing</li>
               <li>• Predictive analytics integration</li>
