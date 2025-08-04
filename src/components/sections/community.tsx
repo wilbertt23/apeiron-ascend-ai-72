@@ -38,8 +38,8 @@ const Community = () => {
     },
     {
       id: 3,
-      author: "Angel Wang",
-      avatar: "AW",
+      author: "Angel Huang",
+      avatar: "AH",
       title: "Advanced combos for maximum damage output",
       content: "Master these advanced combo sequences to maximize your damage potential. Practice these daily for best results...",
       category: "combos",
