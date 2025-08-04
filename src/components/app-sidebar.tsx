@@ -26,7 +26,7 @@ const tabs: Tab[] = [
   { id: "video", label: "Video Analysis", icon: Video, path: "/video" },
   { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon, path: "/gameid" }, 
   { id: "color", label: "Color Scheme Prediction", icon: Palette, path: "/color" },
-  { id: "product", label: "AI Health Services", icon: Building2, path: "/product" },
+  { id: "product", label: "Real-World Applications", icon: Building2, path: "/product" },
   { id: "neural", label: "Neural Network", icon: Network, path: "/neural" },
   { id: "community", label: "Community", icon: Users, path: "/community" },
 ];
