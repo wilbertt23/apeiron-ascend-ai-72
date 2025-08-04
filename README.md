@@ -33,9 +33,10 @@ cd <YOUR_PROJECT_NAME>
 npm i
 
 # Step 4: Start the server for calling the video analysis api
-node server.js
+npm run server
 
 # Step 5: Start the development server with auto-reloading and an instant preview.
+# In a new terminal
 npm run dev
 ```
 
