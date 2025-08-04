@@ -14,8 +14,8 @@ const Community = () => {
   const forumPosts = [
     {
       id: 1,
-      author: "Rizzler",
-      avatar: "R",
+      author: "Kilas Gallimore",
+      avatar: "KG",
       title: "Best strategies for mid-lane domination",
       content: "After analyzing 500+ matches, I've found that positioning and mana management are crucial for mid-lane success. Here are my top tips...",
       category: "strategy",
