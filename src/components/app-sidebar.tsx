@@ -22,13 +22,11 @@ interface Tab {
 const tabs: Tab[] = [
   { id: "home", label: "Home", icon: Lightbulb, path: "/" },
   { id: "project-goals", label: "Project Goals", icon: Target, path: "/project-goals" },
-  { id: "reinforcement", label: "Reinforcement Learning", icon: Brain, path: "/reinforcement" },
   { id: "video", label: "Video Analysis", icon: Video, path: "/video" },
-  { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon, path: "/gameid" }, 
   { id: "color", label: "Color Scheme Prediction", icon: Palette, path: "/color" },
-  { id: "product", label: "Real-World Applications", icon: Building2, path: "/product" },
-  { id: "neural", label: "Neural Network", icon: Network, path: "/neural" },
   { id: "community", label: "Community", icon: Users, path: "/community" },
+  { id: "neural", label: "Neural Network", icon: Network, path: "/neural" },
+  { id: "product", label: "Real-World Applications", icon: Building2, path: "/product" },
 ];
 
 export function AppSidebar() {

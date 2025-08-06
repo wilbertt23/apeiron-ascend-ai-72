@@ -10,13 +10,11 @@ interface Tab {
 }
 
 const tabs: Tab[] = [
-  { id: "reinforcement", label: "Reinforcement Learning", icon: Brain },
   { id: "video", label: "Video Analysis", icon: Video },
-  { id: "gameid", label: "Game ID Analysis", icon: GamepadIcon }, 
   { id: "color", label: "Color Scheme Prediction", icon: Palette },
-  { id: "product", label: "Productization", icon: Building2 },
-  { id: "neural", label: "Neural Network", icon: Network },
   { id: "community", label: "Community", icon: Users },
+  { id: "neural", label: "Neural Network", icon: Network },
+  { id: "product", label: "Real-World Applications", icon: Building2 },
 ];
 
 interface NavigationTabsProps {
