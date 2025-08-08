@@ -7,57 +7,57 @@ const Productization = () => {
     {
       icon: Car,
       title: "Autonomous Driving",
-      description: "Advanced reinforcement learning for self-driving vehicles with real-time decision making",
+      description: "HKPC-led smart mobility research applies reinforcement learning (RL) to deliver safer, more efficient autonomous navigation in dense, dynamic cities.",
       features: [
-        "Dynamic route optimization",
-        "Real-time obstacle detection", 
-        "Adaptive traffic response",
-        "Emergency scenario handling",
-        "Multi-vehicle coordination"
+        "RL route planning with real-time traffic context",
+        "Sensor fusion perception (LiDAR, camera, radar)",
+        "V2X-ready decision making and coordination",
+        "Edge compute for sub-100ms control loops",
+        "Safety validation with high-fidelity simulation"
       ],
       benefits: [
-        "99.9% safety accuracy",
         "30% reduced travel time",
-        "Zero-emission optimization",
-        "Predictive maintenance"
+        "99.9% critical-event avoidance (sim)",
+        "20% energy savings",
+        "100ms planning latency"
       ],
       color: "cyber-cyan"
     },
     {
       icon: Bot,
       title: "Manufacturing Robot Arms",
-      description: "Intelligent robotic systems with adaptive learning capabilities for precision manufacturing",
+      description: "HKPC's Robotics and AI Dept. uses RL to make robot arms truly adaptive—combining vision and human-in-the-loop demos (twin exoskeleton) to generalize tasks like plate picking.",
       features: [
-        "Precision assembly operations",
-        "Quality control automation",
-        "Adaptive grip strength",
-        "Real-time error correction",
-        "Multi-task coordination"
+        "Vision part detection with confidence scoring",
+        "Twin-exoskeleton teleoperation for demos",
+        "Policy learning from 50+ human examples",
+        "Adaptive grip, error recovery, re-tries",
+        "Generalizes to new layouts and lighting"
       ],
       benefits: [
-        "95% efficiency improvement",
-        "Zero-defect manufacturing",
-        "24/7 autonomous operation",
-        "Predictive maintenance"
+        "40% fewer defects in assembly",
+        "30% faster cycle times",
+        "20% less downtime at changeover",
+        "24/7 operation readiness"
       ],
       color: "cyber-blue"
     },
     {
       icon: Heart,
       title: "AI-Enabled Health Services",
-      description: "Advanced healthcare AI systems leveraging machine learning for personalized treatment and predictive diagnostics",
+      description: "Applying RL and LLMs to surgery, consultation, and therapy to improve safety, efficiency, and access while keeping clinicians in the loop.",
       features: [
-        "Medical imaging analysis with 98% accuracy",
-        "Predictive disease modeling",
-        "Personalized treatment optimization",
-        "Real-time patient monitoring",
-        "Drug discovery acceleration"
+        "RL-assisted surgical motion planning",
+        "Diagnostic decision support from patterns",
+        "Adaptive triage via UX forms/questionnaires",
+        "Privacy-preserving on-device learning",
+        "Continuous improvement with oversight"
       ],
       benefits: [
-        "50% faster diagnosis",
-        "35% reduced treatment costs", 
-        "90% early detection rate",
-        "24/7 continuous monitoring"
+        "25% shorter consult time targets",
+        "15-30% better triage accuracy",
+        "60% faster pre-op planning",
+        "10-15% lower readmissions"
       ],
       color: "cyber-purple"
     }

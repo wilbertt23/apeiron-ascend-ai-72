@@ -1,8 +1,36 @@
+import { useEffect } from "react";
 import ProductizationSection from "@/components/sections/productization";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 const AIHealthServices = () => {
-  return <SidebarProvider>
+  useEffect(() => {
+    document.title = "Real-World Applications | HKPC Reinforcement Learning";
+    const meta =
+      (document.querySelector('meta[name="description"]') as HTMLMetaElement | null) ||
+      (() => {
+        const el = document.createElement('meta');
+        el.setAttribute('name', 'description');
+        document.head.appendChild(el);
+        return el as HTMLMetaElement;
+      })();
+    meta.setAttribute(
+      'content',
+      'Explore autonomous driving, manufacturing robot arms, and AI-enabled health services using reinforcement learning at HKPC.'
+    );
+
+    const link =
+      (document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null) ||
+      (() => {
+        const el = document.createElement('link');
+        el.setAttribute('rel', 'canonical');
+        document.head.appendChild(el);
+        return el as HTMLLinkElement;
+      })();
+    link.setAttribute('href', window.location.href);
+  }, []);
+
+  return (
+    <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         
@@ -17,6 +45,7 @@ const AIHealthServices = () => {
           </div>
         </div>
       </div>
-    </SidebarProvider>;
+    </SidebarProvider>
+  );
 };
 export default AIHealthServices;
