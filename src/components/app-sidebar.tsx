@@ -1,4 +1,4 @@
-import { Brain, Target, Video, GamepadIcon, Building2, Network, Users, Palette, Lightbulb } from "lucide-react";
+import { Brain, Target, Video, GamepadIcon, Building2, Network, Users, Palette, Lightbulb, Trophy } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import {
   Sidebar,
@@ -25,6 +25,7 @@ const tabs: Tab[] = [
   { id: "video", label: "Video Analysis", icon: Video, path: "/video" },
   { id: "color", label: "Color Scheme Prediction", icon: Palette, path: "/color" },
   { id: "community", label: "Community", icon: Users, path: "/community" },
+  { id: "achievements", label: "Achievements", icon: Trophy, path: "/community/achievements" },
   { id: "neural", label: "Neural Network", icon: Network, path: "/neural" },
   { id: "product", label: "Real-World Applications", icon: Building2, path: "/product" },
 ];

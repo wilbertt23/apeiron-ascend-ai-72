@@ -13,6 +13,7 @@ import ColorSchemePrediction from "./pages/ColorSchemePrediction";
 import AIHealthServices from "./pages/AIHealthServices";
 import NeuralNetwork from "./pages/NeuralNetwork";
 import Community from "./pages/Community";
+import Achievements from "./pages/Achievements";
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/product" element={<AIHealthServices />} />
           <Route path="/neural" element={<NeuralNetwork />} />
           <Route path="/community" element={<Community />} />
+          <Route path="/community/achievements" element={<Achievements />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
