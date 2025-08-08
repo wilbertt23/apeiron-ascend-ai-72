@@ -197,7 +197,7 @@ const Productization = () => {
                 <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-5">
                   <div className="flex items-center gap-2 mb-3">
                     <Badge variant="outline" className="bg-primary/10 border-primary/30 text-primary">
-                      How Hong Kong Productivity Council contributes
+                      How Hong Kong Productivity Council can contribute
                     </Badge>
                   </div>
                   <ul className="grid md:grid-cols-2 gap-2">

@@ -326,11 +326,11 @@ const VideoAnalysis = () => {
 
   // Match history data
   const matchHistory = [
-    { date: "2024-01-15", opponent: "ProGamer123", result: "Win", score: "8.9", duration: "32m" },
-    { date: "2024-01-14", opponent: "SkillMaster", result: "Loss", score: "7.2", duration: "28m" },
-    { date: "2024-01-13", opponent: "ElitePlayer", result: "Win", score: "9.1", duration: "35m" },
-    { date: "2024-01-12", opponent: "Champion99", result: "Win", score: "8.4", duration: "30m" },
-    { date: "2024-01-11", opponent: "ProLegend", result: "Loss", score: "6.8", duration: "25m" }
+    { date: "2024-01-15", opponent: "WilliamNicholas123", result: "Win", score: "8.9", duration: "32m" },
+    { date: "2024-01-14", opponent: "MrGregson", result: "Loss", score: "7.2", duration: "28m" },
+    { date: "2024-01-13", opponent: "Player67", result: "Win", score: "9.1", duration: "35m" },
+    { date: "2024-01-12", opponent: "ProLegend41", result: "Win", score: "8.4", duration: "30m" },
+    { date: "2024-01-11", opponent: "LilJon", result: "Loss", score: "6.8", duration: "25m" }
   ];
 
   const formatFileSize = (bytes: number) => {
