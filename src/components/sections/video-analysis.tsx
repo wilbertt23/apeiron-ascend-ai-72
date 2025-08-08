@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type CSSProperties } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,7 +8,22 @@ import axios from 'axios';
 
 const BACKEND_API_URL = 'http://localhost:3001';
 
-async function analyzeMedia(mediaFiles: File[], query: string): Promise<any> {
+async function analyzeColorRL(userStat: number[]): Promise<number[]> {
+  try {
+    const response = await axios.post(`${BACKEND_API_URL}/api/color-rl`, { userStat: userStat });
+    if (response.status === 200) {
+      const color = response.data.color;
+      return color;
+    } else {
+      throw new Error('Failed to analyze color RL');
+    }
+  } catch (error) {
+    console.error('Error analyzing color RL:', error);
+    throw error;
+  }
+}
+
+async function analyzeMedia(mediaFiles: File[], query: string): Promise<string> {
   try {
     // Create FormData to send files to backend
     const formData = new FormData();
@@ -55,6 +70,27 @@ async function analyzeMedia(mediaFiles: File[], query: string): Promise<any> {
   }
 }
 
+type AnalysisResults = {
+  overallScore: number | string;
+  playstyle: string;
+  metrics: {
+    apm: number;
+    accuracy: number;
+    efficiency: number;
+    adaptability: number;
+  };
+  skillData: {
+    offensiveness: number;
+    defensiveness: number;
+    manaManagement: number;
+    skillUsage: number;
+    tactics: number;
+    positioning: number;
+  };
+  positive_suggestion: string;
+  negative_suggestion: string;
+};
+
 const VideoAnalysis = () => {
   const [dragActive, setDragActive] = useState(false);
   const [analyzing, setAnalyzing] = useState(false);
@@ -64,7 +100,18 @@ const VideoAnalysis = () => {
   const [showPreview, setShowPreview] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string>("");
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [analysisResults, setAnalysisResults] = useState<any>(null);
+  const [analysisResults, setAnalysisResults] = useState<AnalysisResults | null>(null);
+  const [dynamicColor, setDynamicColor] = useState<{ r: number; g: number; b: number } | null>(null);
+
+  const getDynamicColorStyles = (rgb: { r: number; g: number; b: number }): CSSProperties => {
+    return {
+      '--dynamic-color': `${rgb.r}, ${rgb.g}, ${rgb.b}`,
+      background: 'linear-gradient(135deg, rgba(var(--dynamic-color), 0.15) 0%, rgba(var(--dynamic-color), 0.35) 100%)',
+      border: '1px solid rgba(var(--dynamic-color), 0.35)'
+    } as CSSProperties;
+  };
+
+  // removed unused handleColorRL
 
   // Cleanup video URL on component unmount
   useEffect(() => {
@@ -201,10 +248,16 @@ const VideoAnalysis = () => {
     // Simulate analysis process
     const response = await analyzeMedia([selectedFile], prompt);
     const responseJson = JSON.parse(response);
-    console.log(typeof responseJson);
+    const userStat = [responseJson.skillData.offensiveness, responseJson.skillData.defensiveness, responseJson.skillData.manaManagement, responseJson.skillData.tactics, responseJson.skillData.skillUsage, responseJson.skillData.positioning];
+    const color = await analyzeColorRL(userStat);
+    const r = Math.round(Number(color?.[0] ?? 0));
+    const g = Math.round(Number(color?.[1] ?? 0));
+    const b = Math.round(Number(color?.[2] ?? 0));
+    setDynamicColor({ r, g, b });
     setAnalysisResults(responseJson);
     setAnalysisComplete(true);
     setAnalyzing(false);
+    console.log(color);
   };
 
   // Mock analysis results
@@ -247,11 +300,11 @@ const VideoAnalysis = () => {
   // Pentagon radar data for skills
   const skillData = analysisComplete ? 
   [
-    { skill: "Off", value: analysisResults.skillData.offensiveness, fullMark: 100 },
-    { skill: "Def", value: analysisResults.skillData.defensiveness, fullMark: 100 },
-    { skill: "Man", value: analysisResults.skillData.manaManagement, fullMark: 100 },
-    { skill: "Tac", value: analysisResults.skillData.tactics, fullMark: 100 },
-    { skill: "Ski", value: analysisResults.skillData.skillUsage, fullMark: 100 }
+    { skill: "Off", value: analysisResults?.skillData.offensiveness, fullMark: 100 },
+    { skill: "Def", value: analysisResults?.skillData.defensiveness, fullMark: 100 },
+    { skill: "Man", value: analysisResults?.skillData.manaManagement, fullMark: 100 },
+    { skill: "Tac", value: analysisResults?.skillData.tactics, fullMark: 100 },
+    { skill: "Ski", value: analysisResults?.skillData.skillUsage, fullMark: 100 }
   ]
 
   : [
@@ -495,11 +548,17 @@ const VideoAnalysis = () => {
         /* Analysis Results */
         <div className="space-y-8">
           {/* Overall Score */}
-          <Card className="p-8 text-center bg-gradient-primary">
-            <h3 className="text-3xl font-bold text-background mb-2">Overall Performance Score</h3>
-            <div className="text-6xl font-bold text-background mb-4">{analysisResults.overallScore}</div>
+          <Card
+            className={`p-8 text-center `}
+            style={dynamicColor
+              ? { boxShadow: `0 0 24px rgba(${dynamicColor.r}, ${dynamicColor.g}, ${dynamicColor.b}, 0.7), 0 0 60px rgba(${dynamicColor.r}, ${dynamicColor.g}, ${dynamicColor.b}, 0.35)` }
+              : { boxShadow: '0 0 24px rgba(34,211,238,0.5), 0 0 60px rgba(168,85,247,0.35)' }
+            }
+          >
+            <h3 className="text-3xl font-bold text-muted-foreground mb-2">Overall Performance Score</h3>
+            <div className="text-6xl font-bold text-muted-foreground mb-4">{analysisResults!.overallScore}</div>
             <Badge variant="secondary" className="text-lg px-4 py-2 bg-background text-primary">
-              {analysisResults.playstyle}
+              {analysisResults!.playstyle}
             </Badge>
           </Card>
 
@@ -507,22 +566,22 @@ const VideoAnalysis = () => {
           <div className="grid md:grid-cols-4 gap-4">
             <Card className="p-4 text-center">
               <Clock className="mx-auto mb-2 text-cyber-cyan" size={24} />
-              <div className="text-2xl font-bold text-cyber-cyan">{analysisResults.metrics.apm}</div>
+              <div className="text-2xl font-bold text-cyber-cyan">{analysisResults?.metrics.apm}</div>
               <div className="text-sm text-muted-foreground">Actions Per Minute</div>
             </Card>
             <Card className="p-4 text-center">
               <Target className="mx-auto mb-2 text-cyber-blue" size={24} />
-              <div className="text-2xl font-bold text-cyber-blue">{analysisResults.metrics.accuracy}%</div>
+              <div className="text-2xl font-bold text-cyber-blue">{analysisResults?.metrics.accuracy}%</div>
               <div className="text-sm text-muted-foreground">Accuracy</div>
             </Card>
             <Card className="p-4 text-center">
               <Zap className="mx-auto mb-2 text-cyber-purple" size={24} />
-              <div className="text-2xl font-bold text-cyber-purple">{analysisResults.metrics.efficiency}%</div>
+              <div className="text-2xl font-bold text-cyber-purple">{analysisResults?.metrics.efficiency}%</div>
               <div className="text-sm text-muted-foreground">Efficiency</div>
             </Card>
             <Card className="p-4 text-center">
               <TrendingUp className="mx-auto mb-2 text-cyber-pink" size={24} />
-              <div className="text-2xl font-bold text-cyber-pink">{analysisResults.metrics.adaptability}%</div>
+              <div className="text-2xl font-bold text-cyber-pink">{analysisResults?.metrics.adaptability}%</div>
               <div className="text-sm text-muted-foreground">Adaptability</div>
             </Card>
           </div>
@@ -591,7 +650,7 @@ const VideoAnalysis = () => {
               </h3>
               <div className="space-y-2">
               <div className="flex items-center gap-2">
-                  <span className="text-foreground">{analysisResults.positive_suggestion}</span>
+                  <span className="text-foreground">{analysisResults?.positive_suggestion}</span>
                 </div>
               </div>
             </Card>
@@ -603,7 +662,7 @@ const VideoAnalysis = () => {
               </h3>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <span className="text-foreground">{analysisResults.negative_suggestion}</span>
+                  <span className="text-foreground">{analysisResults?.negative_suggestion}</span>
                 </div>
               </div>
             </Card>
