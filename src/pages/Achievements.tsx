@@ -68,10 +68,10 @@ const Achievements = () => {
             <section className="max-w-6xl mx-auto px-6 py-10">
               <header className="text-center mb-8 animate-fade-in">
                 <h2 className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-                  Your Achievements
+                  Achievements
                 </h2>
                 <p className="text-muted-foreground mt-2">
-                  Steam-style grid: unlocked shine, locked stay subdued until earned.
+                  Track your progress, unlock new challenges, and share your accomplishments in our community page.
                 </p>
               </header>
 
