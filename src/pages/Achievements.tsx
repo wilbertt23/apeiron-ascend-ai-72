@@ -42,10 +42,10 @@ const Achievements = () => {
     () => [
       { id: "first-visit", title: "First!", description: "Open the app for the first time.", unlocked: true, icon: Star },
       { id: "community-starter", title: "Friendship", description: "Upload something in the Community page.", unlocked: false, icon: Star },
-      { id: "color-curious", title: "Colourful", description: "Try the Colour Scheme Prediction tool.", unlocked: false, icon: Trophy },
-      { id: "video-analyst", title: "Video Analyst", description: "Analyze a video clip.", unlocked: false, icon: Trophy },
+      { id: "color-curious", title: "Colourful", description: "Try the Colour Scheme Prediction tool.", unlocked: false, icon: Award },
+      { id: "video-analyst", title: "Video Analyst", description: "Analyze a video clip.", unlocked: false, icon: Award },
       { id: "neural-novice", title: "Neural Novice", description: "Try the Neural Network page.", unlocked: true, icon: Award },
-      { id: "goal-getter", title: "Let's be Real", description: "Read the Real-World Applications page", unlocked: true, icon: Award },
+      { id: "goal-getter", title: "Let's be Real", description: "Read the Real-World Applications page", unlocked: true, icon: Star },
       { id: "defense", title: "Iron Defense", description: "Get a rating of 9 or above on defense", unlocked: false, icon: Trophy },
       { id: "helper", title: "Mr. Aggresive", description: "Get a rating of 9 or above on offense", unlocked: false, icon: Trophy },
       { id: "manager", title: "General Manager", description: "Get a rating of 9 or above on mana management", unlocked: true, icon: Trophy },
