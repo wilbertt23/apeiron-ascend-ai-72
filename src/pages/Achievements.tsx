@@ -40,18 +40,18 @@ const Achievements = () => {
 
   const achievements: AchievementItem[] = useMemo(
     () => [
-      { id: "first-visit", title: "First Visit", description: "Open the app for the first time.", unlocked: true, icon: Star },
-      { id: "community-starter", title: "Community Starter", description: "Upload something in the Community page.", unlocked: true, icon: Star },
-      { id: "color-curious", title: "Color Curious", description: "Try the Color Scheme Prediction tool.", unlocked: false, icon: Trophy },
+      { id: "first-visit", title: "First Time!", description: "Open the app for the first time.", unlocked: true, icon: Star },
+      { id: "community-starter", title: "Friendship", description: "Upload something in the Community page.", unlocked: false, icon: Star },
+      { id: "color-curious", title: "Colourful", description: "Try the Colour Scheme Prediction tool.", unlocked: false, icon: Trophy },
       { id: "video-analyst", title: "Video Analyst", description: "Analyze a video clip.", unlocked: false, icon: Trophy },
-      { id: "neural-novice", title: "Neural Novice", description: "Visit the Neural Network page.", unlocked: true, icon: Award },
-      { id: "goal-getter", title: "Goal Getter", description: "Read the Project Goals.", unlocked: true, icon: Award },
-      { id: "rock-hard", title: "Rock Hard", description: "Get a rating of 9 or above on defense", unlocked: false, icon: Trophy },
+      { id: "neural-novice", title: "Neural Novice", description: "Try the Neural Network page.", unlocked: true, icon: Award },
+      { id: "goal-getter", title: "Let's be Real", description: "Read the Real-World Applications page", unlocked: true, icon: Award },
+      { id: "defense", title: "Iron Defense", description: "Get a rating of 9 or above on defense", unlocked: false, icon: Trophy },
       { id: "helper", title: "Mr. Aggresive", description: "Get a rating of 9 or above on offense", unlocked: false, icon: Trophy },
       { id: "manager", title: "General Manager", description: "Get a rating of 9 or above on mana management", unlocked: true, icon: Trophy },
       { id: "tactician", title: "Confucius", description: "Get a rating of 9 or above on tactics", unlocked: true, icon: Trophy },
       { id: "skill-usage", title: "Wizard", description: "Get a rating of 9 or above on skill usage", unlocked: false, icon: Trophy },
-      { id: "everything", title: "Ascended", description: "Get a rating of 9 or above on all aspects", unlocked: false, icon: Trophy },
+      { id: "everything", title: "Almighty", description: "Get a rating of 9 or above on all aspects", unlocked: false, icon: Trophy },
     ],
     []
   );
