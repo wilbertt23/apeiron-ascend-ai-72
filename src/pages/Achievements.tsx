@@ -40,7 +40,7 @@ const Achievements = () => {
 
   const achievements: AchievementItem[] = useMemo(
     () => [
-      { id: "first-visit", title: "First Time!", description: "Open the app for the first time.", unlocked: true, icon: Star },
+      { id: "first-visit", title: "First!", description: "Open the app for the first time.", unlocked: true, icon: Star },
       { id: "community-starter", title: "Friendship", description: "Upload something in the Community page.", unlocked: false, icon: Star },
       { id: "color-curious", title: "Colourful", description: "Try the Colour Scheme Prediction tool.", unlocked: false, icon: Trophy },
       { id: "video-analyst", title: "Video Analyst", description: "Analyze a video clip.", unlocked: false, icon: Trophy },
