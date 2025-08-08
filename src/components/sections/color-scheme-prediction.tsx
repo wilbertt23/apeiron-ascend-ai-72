@@ -4,6 +4,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Palette, Target, Shield, Zap } from "lucide-react";
+import axios from 'axios';
+
+const BACKEND_API_URL = 'http://localhost:3001';
+
+async function analyzeColorRL(userStat: number[]): Promise<any> {
+  try {
+    const response = await axios.post(`${BACKEND_API_URL}/api/color-rl`, { userStat: userStat });
+    if (response.status === 200) {
+      const color = response.data.color;
+      return color;
+    } else {
+      throw new Error('Failed to analyze color RL');
+    }
+  } catch (error) {
+    console.error('Error analyzing color RL:', error);
+    throw error;
+  }
+}
 
 const ColorSchemePrediction = () => {
   const [gameId, setGameId] = useState("");
@@ -26,7 +44,7 @@ const ColorSchemePrediction = () => {
       const r = Math.floor(Math.random() * 156) + 100; // Random between 100-255
       const g = Math.floor(Math.random() * 156) + 100; // Random between 100-255
       const b = Math.floor(Math.random() * 156) + 100; // Random between 100-255
-      
+          
       let style = "Balanced";
       let confidence = Math.floor(Math.random() * 20) + 70; // Random between 70-90
       
@@ -74,6 +92,44 @@ const ColorSchemePrediction = () => {
     }
   };
 
+  const handleColorRL = async () => {
+    setIsAnalyzing(true);
+    const userStat = [80,70,40,60,50,30];
+    const color = await analyzeColorRL(userStat);
+    setIsAnalyzing(true);
+    
+    // Simulate analysis delay
+    setTimeout(() => {
+      // Generate truly random RGB values for different results each time
+      const r = color[0].toFixed(0);
+      const g = color[1].toFixed(0);
+      const b = color[2].toFixed(0);
+
+      let style = "Balanced";
+      let confidence = Math.floor(Math.random() * 20) + 70; // Random between 70-90
+      
+      // Determine style based on dominant color
+      if (r > g && r > b) {
+        style = "Aggressive";
+        confidence = Math.round(65 + (r / 255) * 30);
+      } else if (g > r && g > b) {
+        style = "Tactical";
+        confidence = Math.round(70 + (g / 255) * 25);
+      } else if (b > r && b > g) {
+        style = "Defensive";
+        confidence = Math.round(68 + (b / 255) * 27);
+      }
+      
+      setPrediction({
+        color: `rgb(${r}, ${g}, ${b})`,
+        style,
+        confidence,
+        rgb: { r, g, b }
+      });
+      setIsAnalyzing(false);
+    }, 2000);
+  }
+
   return (
     <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
       <div className="text-center mb-12">
@@ -103,7 +159,7 @@ const ColorSchemePrediction = () => {
             />
           </div>
           <Button 
-            onClick={analyzePlaystyle} 
+            onClick={handleColorRL} 
             disabled={!gameId.trim() || isAnalyzing}
             className="w-full text-lg py-6"
             variant="cyber"

@@ -33,7 +33,7 @@ cd <YOUR_PROJECT_NAME>
 npm i
 
 # Step 4: Start the server for calling the video analysis api
-npm run server
+python backend/app.py
 
 # Step 5: Start the development server with auto-reloading and an instant preview.
 # In a new terminal
