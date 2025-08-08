@@ -110,7 +110,7 @@ const Community = () => {
     },
     {
       id: 9,
-      author: "Wilbert",
+      author: "Wilbert",S
       avatar: "W",
       title: "Elemental advantages and counter-strategies",
       content: "Master the elemental system! Complete guide to elemental weaknesses, strengths, and how to exploit them in combat...",
@@ -170,7 +170,7 @@ const Community = () => {
     },
     {
       id: 14,
-      author: "VelocityGamer",
+      author: "Eric Lu",
       avatar: "VG",
       title: "Optimization techniques for faster clear times",
       content: "Advanced movement optimization and route planning for competitive speedrunning and efficient dungeon clearing...",
