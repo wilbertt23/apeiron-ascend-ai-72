@@ -157,9 +157,7 @@ const Productization = () => {
         <h2 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-4">
           Real-World Applications
         </h2>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          Practical deployments of reinforcement learning across mobility, manufacturing, and health—organized by what matters most: challenges, techniques, capabilities, and safeguards.
-        </p>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Real-world applications show how reinforcement learning delivers practical impact across mobility, manufacturing, and health.</p>
       </header>
 
       <div className="space-y-10">
