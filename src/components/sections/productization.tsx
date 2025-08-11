@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+
 import { Car, Bot, Heart } from "lucide-react";
 
 const Productization = () => {
@@ -9,144 +9,93 @@ const Productization = () => {
     title: string;
     description: string;
     categories: Category[];
-    contribution: string[];
   }[] = [
     {
       icon: Car,
       title: "Autonomous Driving",
       description:
-        "Reinforcement learning powers perception, prediction, and planning for safe, efficient urban mobility in complex, dense cities.",
+        "Reinforcement learning and real-time analytics work together to perceive, plan, and act safely in complex urban environments.",
       categories: [
         {
-          title: "Challenges",
+          title: "Object Detection",
           items: [
-            "Dense traffic and unpredictable agents",
-            "Occlusions, sensor noise, long-tail events",
-            "Complex rules and non-stationary contexts",
+            "Algorithms process multi‑sensor data to identify pedestrians, vehicles, and obstacles.",
+            "RL dynamically ranks nearby threats based on proximity and vehicle speed.",
+            "Supports deployment in dense cities like Hong Kong.",
           ],
         },
         {
-          title: "Core Techniques",
+          title: "Pathing",
           items: [
-            "RL planners with safety constraints",
-            "Multi-sensor fusion (LiDAR, camera, radar)",
-            "V2X-aware intent prediction & coordination",
+            "Real-time analytics adjusts routes using live traffic, road conditions, and construction updates.",
+            "RL learns optimal steering for complex patterns like roundabouts and merges.",
+            "Predictive analytics forecasts hazards (e.g., a car swerving) to slow down proactively.",
           ],
         },
         {
-          title: "Capabilities",
+          title: "Emergency Handling",
           items: [
-            "Real-time routing, lane selection, merging",
-            "Adaptive speed control and gap acceptance",
-            "Uncertainty-aware, fail-safe behaviors",
+            "RL trains safe maneuvers such as controlled braking and evasive actions from simulated incidents.",
+            "Onboard analytics watches sensor anomalies to trigger failsafes.",
+            "Post‑event learning improves future response policies.",
           ],
         },
-        {
-          title: "Tooling & Evaluation",
-          items: [
-            "High-fidelity simulation & scenario replay",
-            "Reward shaping with safety envelopes",
-            "Continuous online/offline learning loops",
-          ],
-        },
-      ],
-      contribution: [
-        "Urban mobility testbeds and V2X pilots",
-        "Scenario libraries from local traffic patterns",
-        "Edge deployments with latency-optimized stacks",
-        "Public–industry–academia collaboration on safety",
       ],
     },
     {
       icon: Bot,
-      title: "Manufacturing Robot Arms",
+      title: "Task‑Specific Robot Arms",
       description:
-        "Robots move beyond brittle, hard-coded motions—learning from demonstrations and feedback to adapt to variation and recover from errors.",
+        "RL‑powered robotic arms streamline repetitive tasks, reduce costs, and shift human labor toward higher‑value roles.",
       categories: [
         {
-          title: "Why This Matters",
+          title: "Impact",
           items: [
-            "Replace rigid programs with adaptive skills",
-            "Handle part/layout variation in real time",
-            "Improve safety, quality, and throughput",
+            "Streamlines processes, improving cycle time and quality.",
+            "Reduces operational costs and downtime across cells.",
+            "Elevates workers into supervision and exception handling.",
           ],
         },
         {
-          title: "Learning Pipeline",
+          title: "How It Works",
           items: [
-            "Vision detection with confidence scoring",
-            "Twin‑exoskeleton demonstrations (50+)",
-            "Policy fine‑tuning with RL",
+            "Learn‑from‑demonstration initializes skills, then reinforcement learning refines them.",
+            "Adapts to part/layout variation and lighting changes in real time.",
+            "Recovers from errors with intelligent re‑tries and grip adjustments.",
           ],
         },
-        {
-          title: "Capabilities",
-          items: [
-            "Reliable grasping with error recovery",
-            "Adaptive grip and intelligent re‑tries",
-            "Generalizes to new lighting/layouts",
-          ],
-        },
-        {
-          title: "Operations",
-          items: [
-            "Fast changeover and flexible cell design",
-            "24/7 readiness and monitoring",
-            "Scalable to multi‑robot lines",
-          ],
-        },
-      ],
-      contribution: [
-        "Robotics labs with twin‑exoskeleton teleoperation",
-        "Dataset curation and confidence‑driven vision",
-        "Rapid end‑effector and fixture prototyping",
-        "On‑site trials and changeover playbooks",
       ],
     },
     {
       icon: Heart,
       title: "AI‑Enabled Health Services",
       description:
-        "AI augments clinicians in surgery, consultation, and therapy—improving safety and access while keeping experts in the loop.",
+        "AI augments clinicians across surgery, consultation, and therapy—improving safety, efficiency, and access while keeping experts in the loop.",
       categories: [
         {
-          title: "Surgery",
+          title: "AI‑Assisted Surgery",
           items: [
-            "RL‑assisted motion planning and pathing",
-            "Workflow optimization and risk checks",
-            "Simulation‑led rehearsal and validation",
+            "Algorithms analyze historical and intraoperative data to guide clinical actions and strategies.",
+            "Automation streamlines workflows and reduces manual effort.",
+            "Reinforcement learning and repetition improve system performance over time.",
           ],
         },
         {
-          title: "Consultation",
+          title: "AI‑Assisted Medical Consultation",
           items: [
-            "Symptom triage via structured forms",
-            "LLM‑based decision support",
-            "Continual learning with guardrails",
+            "RL improves diagnostic accuracy over time through feedback and outcomes.",
+            "Medication suggestions are generated based on patient symptoms and interaction data.",
+            "Clinician oversight and safety guardrails maintain accountability.",
           ],
         },
         {
-          title: "Therapy",
+          title: "AI‑Assisted Therapy",
           items: [
-            "LLM chat guidance under supervision",
-            "Personalization from longitudinal data",
-            "Safety filters and escalation paths",
+            "Large Language Models learn from vast text data to improve language comprehension.",
+            "Advanced emotional and linguistic understanding enables more effective guidance.",
+            "Personalization from longitudinal data tailors interventions to each patient.",
           ],
         },
-        {
-          title: "Safeguards",
-          items: [
-            "Privacy‑preserving, on‑device learning",
-            "Auditability and human‑in‑the‑loop",
-            "Regulatory‑aligned evaluation",
-          ],
-        },
-      ],
-      contribution: [
-        "Partnerships with clinics for de‑identified datasets",
-        "Privacy‑first RL+LLM frameworks for triage",
-        "Simulation labs for surgical planning validation",
-        "Governance patterns for clinical oversight",
       ],
     },
   ];
@@ -176,7 +125,7 @@ const Productization = () => {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {app.categories.map((cat, i) => (
                     <div key={i} className="rounded-lg border border-border bg-background/60 p-4">
                       <h4 className="text-sm font-semibold text-foreground tracking-wide mb-3">
@@ -194,21 +143,6 @@ const Productization = () => {
                   ))}
                 </div>
 
-                <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-5">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Badge variant="outline" className="bg-primary/10 border-primary/30 text-primary">
-                      How Hong Kong Productivity Council can contribute
-                    </Badge>
-                  </div>
-                  <ul className="grid md:grid-cols-2 gap-2">
-                    {app.contribution.map((c, k) => (
-                      <li key={k} className="flex items-start gap-2">
-                        <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-primary" />
-                        <span className="text-sm text-muted-foreground">{c}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </Card>
             </article>
           );
