@@ -1,5 +1,5 @@
 # server.py
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 import requests
 import os
@@ -10,8 +10,11 @@ from ppo.ppo import PPOAgent
 import torch
 import numpy as np
 
-load_dotenv()
-app = Flask(__name__)
+
+load_dotenv("../.env")
+app = Flask(__name__,
+            static_url_path='/',
+            static_folder='../dist')
 
 # Allow CORS from your frontend
 CORS(app, origins=['http://localhost:8080'], supports_credentials=True)
@@ -37,7 +40,7 @@ agent = PPOAgent(input_size=1000,
                      n_inputs=6,
                      d_model=128,
                      device='cpu')
-checkpoint = torch.load('backend/ppo/ppo_model.pt', map_location='cpu')
+checkpoint = torch.load('ppo/ppo_model.pt', map_location='cpu')
 agent.ac.load_state_dict(checkpoint['actor_critic_state_dict'])
 agent.opt.load_state_dict(checkpoint['optimizer_state_dict'])
 
@@ -107,6 +110,11 @@ def delete_asset(asset_id):
     
     delete_res = requests.delete(url, headers=headers)
     delete_res.raise_for_status()
+
+# Serve static files
+@app.route('/')
+def serve_static():
+    return send_from_directory(app.static_folder, "index.html")
 
 # Main endpoint: handles file upload, NVIDIA API, and asset cleanup
 @app.route('/api/analyze-media', methods=['POST'])
