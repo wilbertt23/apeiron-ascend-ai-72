@@ -4,20 +4,32 @@ from flask_cors import CORS
 import requests
 import os
 from dotenv import load_dotenv
+from pathlib import Path
 from datetime import datetime
 import sys
 from ppo.ppo import PPOAgent
 import torch
 import numpy as np
 
-
-load_dotenv("../.env")
+# Resolve paths relative to this file so Gunicorn and direct runs behave the same
+BASE_DIR = Path(__file__).resolve().parent
+load_dotenv(BASE_DIR.parent.joinpath('.env'))
 app = Flask(__name__,
             static_url_path='/',
             static_folder='dist')
 
-# Allow CORS from your frontend
-CORS(app, origins=['http://localhost:8080'], supports_credentials=True)
+# Allow CORS from local frontends
+CORS(
+    app,
+    origins=[
+        'http://localhost:8080',
+        'http://localhost:5173',
+        'http://localhost:3001',
+        'http://0.0.0.0:3001',
+        'https://apeiron-ascend-ai-72.onrender.com'
+    ],
+    supports_credentials=True
+)
 
 # NVIDIA API config
 NVIDIA_VILA_API_URL = "https://ai.api.nvidia.com/v1/vlm/nvidia/vila"
@@ -40,7 +52,8 @@ agent = PPOAgent(input_size=1000,
                      n_inputs=6,
                      d_model=128,
                      device='cpu')
-checkpoint = torch.load('ppo/ppo_model.pt', map_location='cpu')
+checkpoint_path = BASE_DIR / 'ppo' / 'ppo_model.pt'
+checkpoint = torch.load(str(checkpoint_path), map_location='cpu')
 agent.ac.load_state_dict(checkpoint['actor_critic_state_dict'])
 agent.opt.load_state_dict(checkpoint['optimizer_state_dict'])
 

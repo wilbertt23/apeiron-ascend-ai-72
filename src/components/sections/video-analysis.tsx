@@ -462,7 +462,7 @@ const VideoAnalysis = () => {
                           Drop your gameplay video here
                         </p>
                         <p className="text-muted-foreground mb-4">
-                          Supported: MP4, AVI, MOV (Max 500MB)
+                          Supported: MP4, AVI, MOV (Max 25MB)
                         </p>
                         <Button onClick={handleFileInputClick} className="w-full">
                           Select Video File
