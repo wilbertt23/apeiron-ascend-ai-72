@@ -9,28 +9,28 @@ const ProjectGoals = () => {
       title: "Skilled AI Opponents",
       description: "Develop AI agents capable of providing challenging 1v1 PvP experiences that match or exceed human player skill levels.",
       color: "cyber-cyan",
-      metrics: ["90%+ win rate against novice players", "Adaptive difficulty scaling", "Real-time strategy optimization"]
+      
     },
     {
       icon: BarChart3,
       title: "Real-time Analytics",
       description: "Implement comprehensive data analytics to track player performance and provide actionable insights for improvement.",
       color: "cyber-blue",
-      metrics: ["Live gameplay analysis", "Performance trend tracking", "Personalized recommendations"]
+      
     },
     {
       icon: Users,
       title: "Enhanced Player Experience",
       description: "Create a more engaging gaming environment where players can learn, improve, and enjoy competitive gameplay.",
       color: "cyber-purple",
-      metrics: ["Improved player retention", "Skill progression tracking", "Matchmaking optimization"]
+      
     },
     {
       icon: TrendingUp,
       title: "Continuous Learning",
       description: "Enable AI systems to continuously learn and adapt from new gameplay data and player interactions.",
       color: "cyber-pink",
-      metrics: ["Self-improving algorithms", "Meta-strategy adaptation", "Performance optimization"]
+      
     }
   ];
 
@@ -70,14 +70,6 @@ const ProjectGoals = () => {
                   <p className="text-muted-foreground mb-4">
                     {goal.description}
                   </p>
-                  <div className="space-y-2">
-                    {goal.metrics.map((metric, metricIndex) => (
-                      <div key={metricIndex} className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <div className={`w-1.5 h-1.5 bg-${goal.color} rounded-full`}></div>
-                        {metric}
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             </Card>
@@ -85,53 +77,6 @@ const ProjectGoals = () => {
         })}
       </div>
 
-      {/* Implementation Timeline */}
-      <Card className="p-8 bg-gradient-hero border-border">
-        <h3 className="text-2xl font-semibold text-center mb-8 bg-gradient-primary bg-clip-text text-transparent">
-          Implementation Roadmap
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-          <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-cyber-cyan/20 border-2 border-cyber-cyan flex items-center justify-center">
-              <span className="text-sm font-bold text-cyber-cyan">Q1</span>
-            </div>
-            <h4 className="font-semibold text-cyber-cyan mb-2">Foundation</h4>
-            <p className="text-sm text-muted-foreground">
-              Setup training infrastructure and initial AI models
-            </p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-cyber-blue/20 border-2 border-cyber-blue flex items-center justify-center">
-              <span className="text-sm font-bold text-cyber-blue">Q2</span>
-            </div>
-            <h4 className="font-semibold text-cyber-blue mb-2">Training</h4>
-            <p className="text-sm text-muted-foreground">
-              Intensive AI training and performance optimization
-            </p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-cyber-purple/20 border-2 border-cyber-purple flex items-center justify-center">
-              <span className="text-sm font-bold text-cyber-purple">Q3</span>
-            </div>
-            <h4 className="font-semibold text-cyber-purple mb-2">Analytics</h4>
-            <p className="text-sm text-muted-foreground">
-              Deploy real-time analytics and insights system
-            </p>
-          </div>
-          
-          <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-cyber-pink/20 border-2 border-cyber-pink flex items-center justify-center">
-              <span className="text-sm font-bold text-cyber-pink">Q4</span>
-            </div>
-            <h4 className="font-semibold text-cyber-pink mb-2">Launch</h4>
-            <p className="text-sm text-muted-foreground">
-              Full production deployment and user onboarding
-            </p>
-          </div>
-        </div>
-      </Card>
     </section>
   );
 };

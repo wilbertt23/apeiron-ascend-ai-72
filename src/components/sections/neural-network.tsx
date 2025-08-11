@@ -81,6 +81,16 @@ const NeuralNetwork = () => {
     </div>
   );
 
+  const columns = [
+    { label: "Input layer", nodes: inputs.map((v, i) => ({ value: v, label: ["X","Y","HP","EHP","MP"][i] })), color: "blue" as const },
+    { label: "Hidden layer 1", nodes: hiddenLayer.slice(0,3).map((v, i) => ({ value: v, label: `H${i+1}` })), color: "green" as const },
+    { label: "Hidden layer 2", nodes: hiddenLayer.slice(3,6).map((v, i) => ({ value: v, label: `H${i+4}` })), color: "green" as const },
+    { label: "Output layer", nodes: [{ value: output, label: "Output" }], color: "yellow" as const },
+  ];
+
+  const xOf = (colIndex: number) => (colIndex / (columns.length - 1)) * 100;
+  const yOf = (idx: number, total: number) => ((idx + 1) / (total + 1)) * 100;
+
   return (
     <div className="container mx-auto px-6 py-12">
       <div className="text-center mb-12">
@@ -123,79 +133,62 @@ const NeuralNetwork = () => {
       <Card className="p-8 bg-surface border border-border">
         <h3 className="text-xl font-semibold text-cyber-pink mb-6 text-center">Artificial Neural Networks</h3>
         
-        <div className="flex items-center justify-center space-x-4 overflow-x-auto min-w-max">
-          {/* Input Layer */}
-          <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-foreground mb-6">Input layer</h4>
-            <div className="space-y-1">
-              {inputs.map((input, index) => {
-                const labels = ["X", "Y", "HP", "EHP", "MP"];
-                return (
-                  <NetworkNode
-                    key={index}
-                    value={input}
-                    label={labels[index]}
-                    color="blue"
+        <div className="relative w-full h-[420px]">
+          {/* Connection lines */}
+          <svg className="absolute inset-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {columns.slice(0, -1).map((col, ci) => (
+              col.nodes.map((_, i) => (
+                columns[ci + 1].nodes.map((__, j) => (
+                  <line
+                    key={`${ci}-${i}-${j}`}
+                    x1={xOf(ci)}
+                    y1={yOf(i, col.nodes.length)}
+                    x2={xOf(ci + 1)}
+                    y2={yOf(j, columns[ci + 1].nodes.length)}
+                    stroke="currentColor"
+                    strokeWidth={0.3}
+                    className="text-border"
                   />
-                );
-              })}
-            </div>
-          </div>
+                ))
+              ))
+            ))}
+          </svg>
 
-          <SingleLine />
-
-          {/* First Hidden Layer */}
-          <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-foreground mb-6">Hidden layer 1</h4>
-            <div className="space-y-1">
-              {hiddenLayer.slice(0, 3).map((hidden, index) => (
-                <NetworkNode
-                  key={index}
-                  value={hidden}
-                  label={`H${index + 1}`}
-                  color="green"
-                />
+          {/* Nodes */}
+          {columns.map((col, ci) => (
+            <div
+              key={ci}
+              className="absolute -translate-x-1/2"
+              style={{ left: `${xOf(ci)}%`, top: 0, height: "100%", width: "120px" }}
+            >
+              <div className="text-center text-xs text-muted-foreground mb-2">{col.label}</div>
+              {col.nodes.map((node, ni) => (
+                <div
+                  key={ni}
+                  className="absolute left-1/2 -translate-x-1/2"
+                  style={{ top: `${yOf(ni, col.nodes.length)}%` }}
+                >
+                  <NetworkNode value={node.value} label={node.label} color={col.color} />
+                </div>
               ))}
             </div>
-          </div>
+          ))}
+        </div>
 
-          <SingleLine />
-
-          {/* Second Hidden Layer */}
-          <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-foreground mb-6">Hidden layer 2</h4>
-            <div className="space-y-1">
-              {hiddenLayer.slice(3, 6).map((hidden, index) => (
-                <NetworkNode
-                  key={index}
-                  value={hidden}
-                  label={`H${index + 4}`}
-                  color="green"
-                />
-              ))}
-            </div>
-          </div>
-
-          <SingleLine />
-
-          {/* Output Layer */}
-          <div className="flex flex-col items-center">
-            <h4 className="text-sm font-medium text-foreground mb-6">Output layer</h4>
-            <div className="flex flex-col items-center space-y-4">
-              <NetworkNode
-                value={output}
-                label="Output"
-                color="yellow"
-              />
-              <div className={`px-4 py-2 rounded-lg border text-center font-semibold ${
-                decision === "Attack" ? "bg-red-500/20 border-red-500 text-red-400" :
-                decision === "Retreat" ? "bg-yellow-500/20 border-yellow-500 text-yellow-400" :
-                decision === "Defend" ? "bg-blue-500/20 border-blue-500 text-blue-400" :
-                "bg-surface border-border text-muted-foreground"
-              }`}>
-                {decision}
-              </div>
-            </div>
+        {/* Decision */}
+        <div className="mt-6 flex justify-center">
+          <div
+            className={`px-4 py-2 rounded-lg border text-center font-semibold ${
+              decision === "Attack"
+                ? "bg-red-500/20 border-red-500 text-red-400"
+                : decision === "Retreat"
+                ? "bg-yellow-500/20 border-yellow-500 text-yellow-400"
+                : decision === "Defend"
+                ? "bg-blue-500/20 border-blue-500 text-blue-400"
+                : "bg-surface border-border text-muted-foreground"
+            }`}
+          >
+            {decision}
           </div>
         </div>
 
