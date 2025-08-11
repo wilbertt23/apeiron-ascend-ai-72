@@ -14,7 +14,7 @@ import numpy as np
 load_dotenv("../.env")
 app = Flask(__name__,
             static_url_path='/',
-            static_folder='../dist')
+            static_folder='dist')
 
 # Allow CORS from your frontend
 CORS(app, origins=['http://localhost:8080'], supports_credentials=True)
