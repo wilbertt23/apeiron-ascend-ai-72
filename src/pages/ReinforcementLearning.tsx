@@ -1,8 +1,17 @@
 import ReinforcementLearningSection from "@/components/sections/reinforcement-learning";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const ReinforcementLearning = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-background">
@@ -17,6 +26,17 @@ const ReinforcementLearning = () => {
           <div className="flex-1">
             <ReinforcementLearningSection />
           </div>
+        </div>
+        
+        {/* Back to top button */}
+        <div className="fixed bottom-8 right-8 z-50">
+          <Button
+            onClick={scrollToTop}
+            size="icon"
+            className="rounded-full bg-cyber-cyan hover:bg-cyber-cyan/80 text-black shadow-lg hover:shadow-glow-cyan transition-all duration-300"
+          >
+            <ArrowUp size={20} />
+          </Button>
         </div>
       </div>
     </SidebarProvider>

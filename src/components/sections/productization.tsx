@@ -131,11 +131,13 @@ const Productization = () => {
                       <h4 className="text-sm font-semibold text-foreground tracking-wide mb-3">
                         {cat.title}
                       </h4>
-                      <ul className="space-y-2">
+                      <ul className="space-y-3">
                         {cat.items.map((item, j) => (
-                          <li key={j} className="flex items-start gap-2">
-                            <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-primary" />
-                            <span className="text-sm text-muted-foreground">{item}</span>
+                          <li key={j} className="flex items-start gap-3">
+                            <div className="mt-1.5 p-1 rounded-full bg-gradient-primary shrink-0">
+                              <div className="w-1.5 h-1.5 rounded-full bg-background" />
+                            </div>
+                            <span className="text-sm text-muted-foreground leading-relaxed">{item}</span>
                           </li>
                         ))}
                       </ul>

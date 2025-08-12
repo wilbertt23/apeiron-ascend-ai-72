@@ -3,7 +3,8 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Card } from "@/components/ui/card";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Trophy, Award, Star, Lock } from "lucide-react";
+import { Trophy, Award, Star, Lock, ArrowUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface AchievementItem {
   id: string;
@@ -14,6 +15,13 @@ interface AchievementItem {
 }
 
 const Achievements = () => {
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
   useEffect(() => {
     document.title = "Achievements – Community";
 
@@ -124,6 +132,17 @@ const Achievements = () => {
               </TooltipProvider>
             </section>
           </main>
+        </div>
+        
+        {/* Back to top button */}
+        <div className="fixed bottom-8 right-8 z-50">
+          <Button
+            onClick={scrollToTop}
+            size="icon"
+            className="rounded-full bg-cyber-cyan hover:bg-cyber-cyan/80 text-black shadow-lg hover:shadow-glow-cyan transition-all duration-300"
+          >
+            <ArrowUp size={20} />
+          </Button>
         </div>
       </div>
     </SidebarProvider>
