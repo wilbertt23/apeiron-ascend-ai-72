@@ -27,7 +27,6 @@ CORS(
         'http://localhost:3001',
         'http://0.0.0.0:3001',
         'http://0.0.0.0:$PORT',
-        'https://apeiron-ascend-ai-72.onrender.com',
     ],
     supports_credentials=True
 )
@@ -234,7 +233,7 @@ def health_check():
     })
 
 if __name__ == '__main__':
-    port = 3001
+    port = os.getenv('PORT', 3001)
     print(f"Proxy server running at http://localhost:{port}")
     print(f"Health check: http://localhost:{port}/health")
     app.run(host='0.0.0.0', port=port, debug=True)

@@ -6,7 +6,8 @@ import { Upload, Play, CheckCircle, Target, Zap, Clock, TrendingUp, History, X, 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart, Radar } from "recharts";
 import axios from 'axios';
 
-const BACKEND_API_URL = 'http://localhost:3001';
+const BACKEND_API_URL:string = `http://localhost:10000`; // for deployment
+// const BACKEND_API_URL:string = `http://localhost:3001`; // for local development
 
 async function analyzeColorRL(userStat: number[]): Promise<number[]> {
   try {
