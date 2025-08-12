@@ -34,7 +34,8 @@ CORS(
 # NVIDIA API config
 NVIDIA_VILA_API_URL = "https://ai.api.nvidia.com/v1/vlm/nvidia/vila"
 NVIDIA_NVCF_ASSET_URL = "https://api.nvcf.nvidia.com/v2/nvcf/assets"
-API_KEY = os.getenv('VITE_NVIDIA_VILA_API_KEY')  # Set this in your .env
+# API_KEY = os.getenv('VITE_NVIDIA_VILA_API_KEY')  # Set this in your .env
+API_KEY = os.environ.get('VITE_NVIDIA_VILA_API_KEY')
 
 if not API_KEY:
     print("VITE_NVIDIA_VILA_API_KEY environment variable is required")
