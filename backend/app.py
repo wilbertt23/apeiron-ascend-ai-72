@@ -26,7 +26,7 @@ CORS(
         'http://localhost:5173',
         'http://localhost:3001',
         'http://0.0.0.0:3001',
-        'http://0.0.0.0:$PORT',
+        'http://0.0.0.0:10000'
     ],
     supports_credentials=True
 )
