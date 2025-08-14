@@ -23,7 +23,6 @@ const tabs: Tab[] = [
   { id: "home", label: "Home", icon: Lightbulb, path: "/" },
   { id: "project-goals", label: "Project Goals", icon: Target, path: "/project-goals" },
   { id: "video", label: "Video Analysis", icon: Video, path: "/video" },
-  { id: "color", label: "Color Scheme Prediction", icon: Palette, path: "/color" },
   { id: "community", label: "Community", icon: Users, path: "/community" },
   { id: "achievements", label: "Achievements", icon: Trophy, path: "/community/achievements" },
   { id: "neural", label: "Neural Network", icon: Network, path: "/neural" },

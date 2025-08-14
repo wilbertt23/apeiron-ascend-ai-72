@@ -6,8 +6,8 @@ const ProjectGoals = () => {
   const goals = [
     {
       icon: Shield,
-      title: "Skilled AI Opponents",
-      description: "Develop AI agents capable of providing challenging 1v1 PvP experiences that match or exceed human player skill levels.",
+      title: "Adaptable Data Pipeline",
+      description: "Develop a data pipeline which can be quickly and easily adapted to provide solutions for problems in other domains.",
       color: "cyber-cyan",
       
     },

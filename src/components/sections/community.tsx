@@ -19,8 +19,8 @@ const Community = () => {
       title: "Best strategies for mid-lane domination",
       content: "After analyzing 500+ matches, I've found that positioning and mana management are crucial for mid-lane success. Here are my top tips...",
       category: "strategy",
-      likes: 24,
-      replies: 8,
+      likes: 249,
+      replies: 15,
       timeAgo: "2 hours ago",
       trending: true
     },
@@ -31,8 +31,8 @@ const Community = () => {
       title: "How to counter aggressive early game strategies",
       content: "Facing aggressive opponents in early game? Here's a comprehensive guide on defensive positioning and when to engage...",
       category: "tips",
-      likes: 18,
-      replies: 12,
+      likes: 1820,
+      replies: 72,
       timeAgo: "4 hours ago",
       trending: false
     },
@@ -50,7 +50,7 @@ const Community = () => {
     },
     {
       id: 4,
-      author: "William Nicholas Tiang",
+      author: "William Tiang",
       avatar: "WT",
       title: "Team coordination strategies for ranked matches",
       content: "Communication is key in ranked matches. Here are proven strategies for better team coordination and decision making...",
@@ -110,13 +110,13 @@ const Community = () => {
     },
     {
       id: 9,
-      author: "Wilbert",
+      author: "Wilbert Soehardi",
       avatar: "W",
       title: "Elemental advantages and counter-strategies",
       content: "Master the elemental system! Complete guide to elemental weaknesses, strengths, and how to exploit them in combat...",
       category: "tips",
-      likes: 33,
-      replies: 14,
+      likes: 1,
+      replies: 0,
       timeAgo: "4 days ago",
       trending: false
     },
