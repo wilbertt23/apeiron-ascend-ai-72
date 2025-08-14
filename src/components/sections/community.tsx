@@ -98,7 +98,7 @@ const Community = () => {
     },
     {
       id: 8,
-      author: "Allison Shao",
+      author: "Alison Shao",
       avatar: "AS",
       title: "Understanding creature synergies and team compositions",
       content: "Deep dive into creature abilities and how to build the most effective teams for different game modes and strategies...",
@@ -146,7 +146,7 @@ const Community = () => {
     },
     {
       id: 12,
-      author: "NightCrawler99",
+      author: "Eric Lu",
       avatar: "NC",
       title: "Boss fight patterns and optimal damage windows",
       content: "Detailed analysis of boss attack patterns and the best timing for maximum damage output during raid encounters...",
