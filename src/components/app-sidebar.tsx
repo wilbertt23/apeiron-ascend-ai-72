@@ -37,7 +37,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar 
-      className={`${collapsed ? "w-14" : "w-64"} lg:${collapsed ? "w-14" : "w-64"} md:${collapsed ? "w-14" : "w-56"} sm:${collapsed ? "w-12" : "w-52"}`} 
+      className={`${collapsed ? "w-14" : "w-64"} lg:${collapsed ? "w-14" : "w-64"} md:${collapsed ? "w-14" : "w-56"} sm:${collapsed ? "w-12" : "w-52"} z-50`} 
       collapsible="icon"
     >
       <SidebarContent>
