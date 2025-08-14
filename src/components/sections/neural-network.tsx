@@ -135,23 +135,30 @@ const NeuralNetwork = () => {
         
         <div className="relative w-full h-[420px]">
           {/* Connection lines */}
-          <svg className="absolute inset-0" viewBox="0 0 100 100" preserveAspectRatio="none">
-            {columns.slice(0, -1).map((col, ci) => (
-              col.nodes.map((_, i) => (
-                columns[ci + 1].nodes.map((__, j) => (
-                  <line
-                    key={`${ci}-${i}-${j}`}
-                    x1={xOf(ci)}
-                    y1={yOf(i, col.nodes.length)}
-                    x2={xOf(ci + 1)}
-                    y2={yOf(j, columns[ci + 1].nodes.length)}
-                    stroke="currentColor"
-                    strokeWidth={0.3}
-                    className="text-border"
-                  />
-                ))
-              ))
-            ))}
+          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {columns.slice(0, -1).map((col, ci) => 
+              col.nodes.map((_, i) => 
+                columns[ci + 1].nodes.map((__, j) => {
+                  const x1 = xOf(ci) + 8; // Offset to center of circle
+                  const y1 = yOf(i, col.nodes.length);
+                  const x2 = xOf(ci + 1) - 8; // Offset to center of circle
+                  const y2 = yOf(j, columns[ci + 1].nodes.length);
+                  
+                  return (
+                    <line
+                      key={`${ci}-${i}-${j}`}
+                      x1={x1}
+                      y1={y1}
+                      x2={x2}
+                      y2={y2}
+                      stroke="#64748b"
+                      strokeWidth="0.2"
+                      opacity="0.6"
+                    />
+                  );
+                })
+              )
+            )}
           </svg>
 
           {/* Nodes */}
