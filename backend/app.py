@@ -28,7 +28,8 @@ CORS(
         'http://0.0.0.0:3001',
         'http://0.0.0.0:10000',
         'https://apeiron-ascend-ai-72.onrender.com',
-        'http://127.0.0.1:10000'
+        'http://127.0.0.1:10000',
+        'http://localhost:5173'
     ],
     supports_credentials=True
 )
