@@ -9,7 +9,6 @@ import ProjectGoals from "./pages/ProjectGoals";
 import ReinforcementLearning from "./pages/ReinforcementLearning";
 import VideoAnalysis from "./pages/VideoAnalysis";
 import GameIDAnalysis from "./pages/GameIDAnalysis";
-import ColorSchemePrediction from "./pages/ColorSchemePrediction";
 import AIHealthServices from "./pages/AIHealthServices";
 import NeuralNetwork from "./pages/NeuralNetwork";
 import Community from "./pages/Community";
@@ -29,7 +28,6 @@ const App = () => (
           <Route path="/reinforcement" element={<ReinforcementLearning />} />
           <Route path="/video" element={<VideoAnalysis />} />
           <Route path="/gameid" element={<GameIDAnalysis />} />
-          <Route path="/color" element={<ColorSchemePrediction />} />
           <Route path="/product" element={<AIHealthServices />} />
           <Route path="/neural" element={<NeuralNetwork />} />
           <Route path="/community" element={<Community />} />
