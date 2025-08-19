@@ -250,7 +250,8 @@ const VideoAnalysis = () => {
     const response = await analyzeMedia([selectedFile], prompt);
     const responseJson = JSON.parse(response);
     const userStat = [responseJson.skillData.offensiveness, responseJson.skillData.defensiveness, responseJson.skillData.manaManagement, responseJson.skillData.tactics, responseJson.skillData.skillUsage, responseJson.skillData.positioning];
-    const color = await analyzeColorRL(userStat);
+    // const color = await analyzeColorRL(userStat);
+    const color = [Math.random() * 255, Math.random() * 255, Math.random() * 255];
     const r = Math.round(Number(color?.[0] ?? 0));
     const g = Math.round(Number(color?.[1] ?? 0));
     const b = Math.round(Number(color?.[2] ?? 0));
