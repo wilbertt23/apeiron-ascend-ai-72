@@ -6,12 +6,12 @@ import { Upload, Play, CheckCircle, Target, Zap, Clock, TrendingUp, History, X, 
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, PolarGrid, PolarAngleAxis, PolarRadiusAxis, RadarChart, Radar } from "recharts";
 import axios from 'axios';
 
-const BACKEND_API_URL:string = `https://apeiron-ascend-ai-72.onrender.com`; // for deployment
-// const BACKEND_API_URL:string = `http://localhost:3001`; // for local development
+// const BACKEND_API_URL:string = `https://apeiron-ascend-ai-72.onrender.com`; // for deployment
+// const BACKEND_API_URL:string = `http://localhost:1000`; // for local development
 
 async function analyzeColorRL(userStat: number[]): Promise<number[]> {
   try {
-    const response = await axios.post(`${BACKEND_API_URL}/api/color-rl`, { userStat: userStat });
+    const response = await axios.post(`/api/color-rl`, { userStat: userStat });
     if (response.status === 200) {
       const color = response.data.color;
       return color;
@@ -40,7 +40,7 @@ async function analyzeMedia(mediaFiles: File[], query: string): Promise<string> 
     console.log(`Sending ${mediaFiles.length} file(s) to backend for analysis...`);
     
     // Send request to backend server
-    const response = await axios.post(`${BACKEND_API_URL}/api/analyze-media`, formData, {
+    const response = await axios.post(`/api/analyze-media`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
